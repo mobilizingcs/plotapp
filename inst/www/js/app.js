@@ -59,6 +59,7 @@ $(function() {
     $("#sizefield").empty().append($("<option>"));   
     $("#facetfield").empty().append($("<option>"));     
     $.each(mydata[surveyid].prompts, function(i, val){
+      if(val.promptType == "text" || val.promptType == "photo") return;
       $("#xfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));
       $("#yfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));  
       $("#colorfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));   
