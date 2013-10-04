@@ -27,11 +27,9 @@
 
 <body>
   <div class="container">
+  
+    <br>
 
-    <div class="page-header">
-      <h1>Plot Builder<span class="pull-right" id="username"></span></h1>
-    </div>
-    
     <div class="row">
       <div class="well col-md-4 col-lg-3">
 
@@ -67,31 +65,29 @@
             </div>           
             
             <div id="xfieldgroup" class="form-group">
-              <label class="control-label" for="xfield">X axis (required)</label>
+              <label class="control-label" for="xfield">X axis</label>
               <select id="xfield" class="form-control"></select> 
             </div>   
             
             <div id="yfieldgroup" class="form-group">
-              <label class="control-label" for="yfield">Y axis</label>
+              <label class="control-label" for="yfield">Y axis (optional)</label>
               <select id="yfield" class="form-control"></select> 
             </div>
             
             <div id="yfieldgroup" class="form-group">
-              <label class="control-label" for="yfield">Color</label>
+              <label class="control-label" for="yfield">Color (optional)</label>
               <select id="colorfield" class="form-control"></select> 
             </div>   
             
             <div id="sizefieldgroup" class="form-group">
-              <label class="control-label" for="sizefield">Size</label>
+              <label class="control-label" for="sizefield">Size (optional)</label>
               <select id="sizefield" class="form-control"></select> 
             </div>        
             
             <div id="facetfieldgroup" class="form-group">
-              <label class="control-label" for="facetfield">Facet</label>
+              <label class="control-label" for="facetfield">Facet (optional)</label>
               <select id="facetfield" class="form-control"></select> 
             </div>               
-            
-            
             
           </fieldset>
         </form>
@@ -101,6 +97,9 @@
       </div>
       
       <div class="col-md-8 col-lg-9">
+        <div class="page-header">
+          <h1>Plot<span class="pull-right" id="username"></span></h1>
+        </div>
         <div id="plotdiv"></div>
       </div>  
     </div>

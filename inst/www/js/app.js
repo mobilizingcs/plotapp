@@ -53,7 +53,7 @@ $(function() {
   function populatevars(){
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
-    $("#xfield").empty().append($("<option>")).append($("<option>").text("Date")).append($("<option>").text("Time"));
+    $("#xfield").empty().append($("<option>").text("Date")).append($("<option>").text("Time"));
     $("#yfield").empty().append($("<option>"));
     $("#colorfield").empty().append($("<option>"));
     $("#sizefield").empty().append($("<option>"));   
@@ -91,6 +91,7 @@ $(function() {
     
     if($("#colorfield").val()){
       args.color = new opencpu.Snippet($("#colorfield").val());
+      args.fill = new opencpu.Snippet($("#colorfield").val());
     }    
     
     if($("#sizefield").val()){
