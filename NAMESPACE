@@ -1,0 +1,4 @@
+export(getdata)
+export(makeplot)
+importFrom(Ohmage,oh.survey_response.read)
+importFrom(ggplot2,qplot)

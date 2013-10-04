@@ -1,0 +1,15 @@
+Package: plotbuilder
+Type: App
+Title: Build plots with Ohmage data
+Version: 0.1
+Date: 2013-10-04
+Author: Jeroen Ooms
+Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
+Description: Build plots with Ohmage data
+License: GPL
+Depends:
+    Ohmage,
+    ggplot2
+Collate:
+    'getdata.R'
+    'makeplot.R'

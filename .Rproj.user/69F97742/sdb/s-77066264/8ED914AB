@@ -1,0 +1,17 @@
+{
+    "contents" : "#' Make plot\n#'\n#' Function to make plot. Currently just wraps around qplot\n#'\n#' @param data The dataframe\n#' @param ... passed on to qplot\n#' @importFrom ggplot2 qplot\n#' @export\nmakeplot <- function(data, ...){\n  #qplot is weird. use ggplot() instead\n  do.call(\"qplot\", as.list(match.call())[-1])\n}\n",
+    "created" : 1380910973281.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2790912567",
+    "id" : "8ED914AB",
+    "lastKnownWriteTime" : 1380912045,
+    "path" : "~/workspace/plotbuilder/R/makeplot.R",
+    "project_path" : "R/makeplot.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

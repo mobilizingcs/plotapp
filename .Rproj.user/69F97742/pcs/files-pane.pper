@@ -1,0 +1,9 @@
+{
+    "path" : "~/workspace/plotbuilder/inst/www",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
