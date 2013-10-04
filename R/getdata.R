@@ -10,6 +10,9 @@
 #' @export
 getdata <- function(campaign_urn, serverurl, token, ...){
   mydata <- oh.survey_response.read(campaign_urn, serverurl=serverurl,token=token, ...);
+  if(nrow(mydata) == 0){
+    stop("No survey responses found for this campaign/range.")
+  }
   mydata$Date <- as.Date(mydata$context.timestamp);
   mydata$Time <- as.POSIXct(mydata$context.timestamp);
   return(mydata);
