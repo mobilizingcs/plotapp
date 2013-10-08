@@ -1,6 +1,8 @@
-makeplot_mosaic <- function(data, x, y, ...){
+makeplot_mosaic <- function(data, x, y, fill, size, facets, ...){
   xvar <- deparse(substitute(x))
   yvar <- deparse(substitute(y))
+  fillvar <- deparse(substitute(fill))
+  
   mydata <- data[c(xvar, yvar)];
   mytable <- table(mydata);
   widths <- c(0, cumsum(apply(mytable, 1, sum)));
@@ -18,7 +20,14 @@ makeplot_mosaic <- function(data, x, y, ...){
   alldata[[xvar]] <- rep(dimnames(mytable)[[1]],rep(ncol(mytable), nrow(mytable)));
   alldata[[yvar]] <- rep(dimnames(mytable)[[2]],nrow(mytable));
   
-  ggplot(alldata, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)) + 
-    geom_rect(color="black") +
+  myplot <- ggplot(alldata, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)) + 
     xlab(paste(xvar, "(count)")) + ylab(paste(yvar, "(proportion)"));
+  
+  if(!missing(fill)){
+    myplot <- myplot + geom_rect(color="white", aes_string(fill=fillvar));
+  } else {
+    myplot <- myplot + geom_rect(color="white");
+  }
+  
+  myplot
 }
