@@ -10,6 +10,3 @@ License: GPL
 Depends:
     Ohmage,
     ggplot2
-Collate:
-    'getdata.R'
-    'makeplot.R'

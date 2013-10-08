@@ -90,7 +90,7 @@ $(function() {
     }
     
     if($("#colorfield").val()){
-      args.color = new opencpu.Snippet($("#colorfield").val());
+      //args.color = new opencpu.Snippet($("#colorfield").val());
       args.fill = new opencpu.Snippet($("#colorfield").val());
     }    
     
