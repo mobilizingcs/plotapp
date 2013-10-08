@@ -19,6 +19,6 @@ makeplot_mosaic <- function(data, x, y, ...){
   alldata[[yvar]] <- rep(dimnames(mytable)[[2]],nrow(mytable));
   
   ggplot(alldata, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)) + 
-    geom_rect(color="black", aes_string(fill=yvar)) +
+    geom_rect(color="black") +
     xlab(paste(xvar, "(count)")) + ylab(paste(yvar, "(proportion)"));
 }
