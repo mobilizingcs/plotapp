@@ -69,18 +69,19 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
           geom_point() +
           geom_smooth(method="lm", se=FALSE, linetype="dashed", size=1);
       } else {
-        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0, height=0.1));
+        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0, height=0.15));
       }
     } else if(is.factor(xvar)){
       if(is.quant(yvar)){
-        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.1, height=0));
+        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.15, height=0));
       } else {
-        if(!missing(fill)){
-          myplot <- myplot + geom_point(size=12);           
-        } else {
-          myplot <- myplot + geom_point(size=12, color="white");   
-        }
-        myplot <- myplot + geom_text(stat="bin2d", aes(label=..count..));  
+        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.15, height=0.15));
+        #if(!missing(fill)){
+        #  myplot <- myplot + geom_point(size=12);           
+        #} else {
+        #  myplot <- myplot + geom_point(size=12, color="white");   
+        #}
+        #myplot <- myplot + geom_text(stat="bin2d", aes(label=..count..));  
       }
     }
   }
