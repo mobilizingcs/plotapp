@@ -2,10 +2,12 @@
 \alias{makeplot}
 \title{Make plot}
 \usage{
-  makeplot(data, ...)
+  makeplot(data, x, y, subset = TRUE, ...)
 }
 \arguments{
   \item{data}{The dataframe}
+
+  \item{subset}{subset the data. See ?subset}
 
   \item{...}{passed on to qplot}
 }

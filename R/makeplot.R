@@ -3,19 +3,98 @@
 #' Function to make plot. Currently just wraps around qplot
 #'
 #' @param data The dataframe
+#' @param subset subset the data. See ?subset
 #' @param ... passed on to qplot
 #' @importFrom ggplot2 qplot
+#' @examples makeplot(iris, x='Sepal.Width')
+#' makeplot(iris, x='Sepal.Width', fill='Species')
+#' makeplot(iris, x='Sepal.Width', facet='Species')
+#' makeplot(iris, x='Sepal.Width', subset='Species == "virginica"')
+#' makeplot(iris, x='Sepal.Width', subset='Species == "virginica" & Sepal.Width > 3')
+#' makeplot(iris, x='Species')
+#' makeplot(iris, x='Species', fill='Species')
+#' makeplot(iris, y='Sepal.Width', x='Sepal.Length', fill='Species')
+#' makeplot(iris, x='Species', y='Sepal.Length', fill='Species')
+#' makeplot(iris, x='Sepal.Length', y='Species')
+#' makeplot(CO2, x='Plant', y='Type')
+#' makeplot(CO2, x='Treatment', y='Type')
+#' makeplot(CO2, x='Treatment', y='Plant', facet='Type', fill='Plant')
 #' @export
-makeplot <- function(data, x, y, ...){
+makeplot <- function(data, subset, x, y, fill, size, facet){
   
-  if(missing(y) && is(eval(substitute(x), data), "numeric")){
-    return(do.call("makeplot_dotplot", as.list(match.call())[-1]));
-  } 
-  
-  if(is(eval(substitute(x), data), "factor") && is(eval(substitute(y), data), "factor")){
-    return(do.call("makeplot_mosaic", as.list(match.call())[-1]));
+  #subset filtering
+  if(!missing(subset)){
+    r <- eval(parse(text=subset), data, parent.frame())
+    if (!is.logical(r)) 
+      stop("'subset' must be logical")
+    r <- r & !is.na(r)
+    data <- data[r, TRUE, drop = FALSE];
   }
   
-  #qplot is weird. use ggplot() instead
-  do.call("qplot", as.list(match.call())[-1]) 
+  #create the basic ggplot object
+  aeslist <- list ( x = as.name(x) );  
+  
+  if(!missing(fill)) {
+    aeslist$fill <- as.name(fill);
+    aeslist$colour <- as.name(fill);
+  }
+  
+  if(!missing(y)){
+    aeslist$y <- as.name(y);
+  }
+  
+  if(!missing(size)) aeslist$size <- as.name(size); 
+  myplot <- ggplot(data, structure(aeslist, class="uneval"))
+  
+  #extract x from data
+  xvar <- eval(as.name(x), data);
+  
+  #decide what plot to make
+  if(missing(y)){
+    #one dimensional plots
+    if(is.numeric(xvar)){
+      myplot <- myplot + geom_dotplot();
+    } else {
+      myplot <- myplot + geom_bar();
+    }
+  } else {
+    #two dimensional plots
+    yvar <- eval(as.name(y), data);
+    #if(is(xvar, "factor") && is(yvar, "factor")){
+    #  return(makeplot_mosaic(x=x, y=y, fill=fill, size=size));
+    #} else if
+    if(is.quant(xvar)){
+      if(is.quant(yvar)){
+        myplot <- myplot + 
+          geom_point() +
+          geom_smooth(method="lm", se=FALSE, linetype="dashed", size=1);
+      } else {
+        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0, height=0.1));
+      }
+    } else if(is.factor(xvar)){
+      if(is.quant(yvar)){
+        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.1, height=0));
+      } else {
+        if(!missing(fill)){
+          myplot <- myplot + geom_point(size=12);           
+        } else {
+          myplot <- myplot + geom_point(size=12, color="white");   
+        }
+        myplot <- myplot + geom_text(stat="bin2d", aes(label=..count..));  
+      }
+    }
+  }
+
+  #add facet
+  if(!missing(facet)){
+    myplot <- myplot + facet_wrap(as.formula(paste("~", facet)))
+  }
+  
+  print(myplot)
+  invisible();  
+}
+
+#quantitative variables are numeric, date or time.
+is.quant <- function(x){
+  isTRUE(is.numeric(x) || is(x, "Date") || is(x, "POSIXt"));
 }

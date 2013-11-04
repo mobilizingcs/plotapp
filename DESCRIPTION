@@ -1,5 +1,5 @@
 Package: plotbuilder
-Type: App
+Type: Package
 Title: Build plots with Ohmage data
 Version: 0.1
 Date: 2013-10-04

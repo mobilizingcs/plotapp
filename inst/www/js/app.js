@@ -1,5 +1,9 @@
 $(function() {
   
+  //this is where we set the opencpu server?
+  opencpu.r_path = "/ocpu/user/jeroen/library/plotbuilder/R";
+  
+  //some globals
   var campaign_urn;
   var campaigndata = {};
   var today = new Date();
@@ -53,18 +57,18 @@ $(function() {
   function populatevars(){
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
-    $("#xfield").empty().append($("<option>").text("Date")).append($("<option>").text("Time"));
+    $("#xfield").empty().append($("<option>").text("Date"));
     $("#yfield").empty().append($("<option>"));
     $("#colorfield").empty().append($("<option>"));
     $("#sizefield").empty().append($("<option>"));   
     $("#facetfield").empty().append($("<option>"));     
     $.each(mydata[surveyid].prompts, function(i, val){
       if(val.promptType == "text" || val.promptType == "photo") return;
-      $("#xfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));
-      $("#yfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));  
-      $("#colorfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));   
-      $("#sizefield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel)); 
-      $("#facetfield").append($("<option>").val("prompt.id." + val.id).text(val.promptlabel));        
+      $("#xfield").append($("<option>").val(val.id).text(val.id)); //.text(val.promptlabel)); 
+      $("#yfield").append($("<option>").val(val.id).text(val.id));  
+      $("#colorfield").append($("<option>").val(val.id).text(val.id));   
+      $("#sizefield").append($("<option>").val(val.id).text(val.id)); 
+      $("#facetfield").append($("<option>").val(val.id).text(val.id));        
     });
   }
   
@@ -81,27 +85,17 @@ $(function() {
   function makeplot(data){
     var args = {
       data : data,
-      x : new opencpu.Snippet($("#xfield").val())
+      x : $("#xfield").val()
     };
     
     //setting optional arguments
-    if($("#yfield").val()){
-      args.y = new opencpu.Snippet($("#yfield").val());
-    }
+    if($("#yfield").val()) args.y = $("#yfield").val();
+    if($("#colorfield").val()) args.fill = $("#colorfield").val();
+    if($("#sizefield").val()) args.size = $("#sizefield").val();
+    if($("#facetfield").val()) args.facet = $("#facetfield").val();
+    if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
     
-    if($("#colorfield").val()){
-      //args.color = new opencpu.Snippet($("#colorfield").val());
-      args.fill = new opencpu.Snippet($("#colorfield").val());
-    }    
-    
-    if($("#sizefield").val()){
-      args.size = new opencpu.Snippet($("#sizefield").val());
-    }        
-    
-    if($("#facetfield").val()){
-      args.facets = new opencpu.Snippet("~" + $("#facetfield").val());
-    }      
-    
+    //chain it    
     return $("#plotdiv").r_fun_plot("makeplot", args);
   }
   

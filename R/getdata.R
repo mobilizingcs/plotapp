@@ -13,6 +13,7 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   if(nrow(mydata) == 0){
     stop("No survey responses found for this campaign/range.")
   }
+  names(mydata) <- sub("^prompt.id.", "", names(mydata));
   mydata$Date <- as.Date(mydata$context.timestamp);
   mydata$Time <- as.POSIXct(mydata$context.timestamp);
   return(mydata);
