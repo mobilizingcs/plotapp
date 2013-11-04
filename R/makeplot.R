@@ -4,8 +4,13 @@
 #'
 #' @param data The dataframe
 #' @param subset subset the data. See ?subset
+#' @param x x-variable (as string)
+#' @param y y-variable (as string)
+#' @param fill coloring variable (as string)
+#' @param size size variable (as string)
+#' @param facet faceting variable (as string)
 #' @param ... passed on to qplot
-#' @importFrom ggplot2 qplot
+#' @import ggplot2
 #' @examples makeplot(iris, x='Sepal.Width')
 #' makeplot(iris, x='Sepal.Width', fill='Species')
 #' makeplot(iris, x='Sepal.Width', facet='Species')

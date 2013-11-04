@@ -17,5 +17,13 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$date <- as.Date(mydata$context.timestamp);
   mydata$timestamp <- as.POSIXct(mydata$context.timestamp);
   mydata$user <- as.factor(mydata$user.id);
+  
+  #some fixes
+  for(i in seq_along(mydata)){
+    if(length(mydata[[i]]) && is.numeric(mydata[[i]]) && (length(unique(mydata[[i]])) < 8)){
+      mydata[[i]] <- as.factor(mydata[[i]]);
+    }
+  }
+  
   return(mydata);
 }

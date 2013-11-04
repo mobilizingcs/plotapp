@@ -1,12 +1,12 @@
 Package: plotbuilder
 Type: Package
 Title: Build plots with Ohmage data
-Version: 0.1
-Date: 2013-10-04
+Version: 0.2
+Date: 2013-11-04
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
 Description: Build plots with Ohmage data
 License: GPL
-Depends:
+Imports:
     Ohmage,
     ggplot2
