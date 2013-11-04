@@ -58,7 +58,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
   if(missing(y)){
     #one dimensional plots
     if(is.numeric(xvar)){
-      myplot <- myplot + geom_dotplot();
+      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot") + ylab("") + opts(axis.text.y=theme_blank());
     } else {
       myplot <- myplot + geom_bar();
     }
@@ -74,13 +74,13 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
           geom_point() +
           geom_smooth(method="lm", se=FALSE, linetype="dashed", size=1);
       } else {
-        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0, height=0.15));
+        myplot <- myplot + geom_point(position=position_jitter(width = 0, height=0.15));
       }
     } else if(is.factor(xvar)){
       if(is.quant(yvar)){
-        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.15, height=0));
+        myplot <- myplot + geom_point(position=position_jitter(width = 0.15, height=0));
       } else {
-        myplot <- myplot + geom_point(size=3, position=position_jitter(width = 0.15, height=0.15));
+        myplot <- myplot + geom_point(position=position_jitter(width = 0.15, height=0.15));
         #if(!missing(fill)){
         #  myplot <- myplot + geom_point(size=12);           
         #} else {
@@ -88,6 +88,10 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
         #}
         #myplot <- myplot + geom_text(stat="bin2d", aes(label=..count..));  
       }
+    }
+    #make a little bigger by default
+    if(missing(size)){
+      myplot$layers[[1]]$geom_params$size = 3;
     }
   }
 

@@ -68,15 +68,21 @@ $(function() {
       if(val.promptType == "text" || val.promptType == "photo") return;
       $("#xfield").append($("<option>").val(val.id).text(val.id)); //.text(val.promptlabel)); 
       $("#yfield").append($("<option>").val(val.id).text(val.id));  
-      $("#colorfield").append($("<option>").val(val.id).text(val.id));   
       if(val.promptType == "number"){
         $("#sizefield").append($("<option>").val(val.id).text(val.id));  
       }
       if(val.promptType == "single_choice"){
+        $("#colorfield").append($("<option>").val(val.id).text(val.id));           
         $("#facetfield").append($("<option>").val(val.id).text(val.id));
       }
     });
+    
+    $("#yfield").on("change", function(){
+      $(this).val() ? $("#sizefield").removeAttr("disabled") : $("#sizefield").val("").attr("disabled", "disabled");
+    });
   }
+  
+  
   
   function getdata(cb){
     return opencpu.r_fun_call("getdata", {
@@ -144,6 +150,9 @@ $(function() {
         });
         $("#campaignfield").val("");
 			});
+      
+      //prevent timeouts while using the application
+      oh.keepalive();
 		});
 	});
   
