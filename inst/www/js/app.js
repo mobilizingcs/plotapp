@@ -69,8 +69,12 @@ $(function() {
       $("#xfield").append($("<option>").val(val.id).text(val.id)); //.text(val.promptlabel)); 
       $("#yfield").append($("<option>").val(val.id).text(val.id));  
       $("#colorfield").append($("<option>").val(val.id).text(val.id));   
-      $("#sizefield").append($("<option>").val(val.id).text(val.id)); 
-      $("#facetfield").append($("<option>").val(val.id).text(val.id));        
+      if(val.promptType == "number"){
+        $("#sizefield").append($("<option>").val(val.id).text(val.id));  
+      }
+      if(val.promptType == "single_choice"){
+        $("#facetfield").append($("<option>").val(val.id).text(val.id));
+      }
     });
   }
   
