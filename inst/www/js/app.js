@@ -1,7 +1,7 @@
 $(function() {
   
   //this is where we set the opencpu server?
-  opencpu.r_path = "/ocpu/user/jeroen/library/plotbuilder/R";
+  //opencpu.r_path = "/ocpu/library/plotbuilder/R";
   
   //some globals
   var campaign_urn;
