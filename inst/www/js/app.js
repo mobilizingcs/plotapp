@@ -2,7 +2,7 @@ $(function() {
   
   //this is where we set the opencpu server in case it is hosted elsewhere
   if(!location.pathname.match("/library/plotbuilder")){
-    opencpu.r_path = "/ocpu/library/plotbuilder/R";
+    opencpu.seturl("/ocpu/library/plotbuilder/R");
   }
   
   //some globals
