@@ -58,8 +58,12 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
   if(missing(y)){
     #one dimensional plots
     if(is.numeric(xvar)){
-      dotsize <- calcsize(xvar);
-      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", dotsize=dotsize) + ylab("") + opts(axis.text.y=theme_blank());
+      bins <- max(30, round(length(xvar) ^ 0.75))
+      binwidth <- diff(range(xvar)) / bins;
+      peak <- max(table(round(xvar/binwidth)))
+      aspectratio <- 1.8;
+      dotsize <- min(1, bins/peak/aspectratio);
+      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + opts(axis.text.y=theme_blank());
     } else {
       myplot <- myplot + geom_bar();
     }
