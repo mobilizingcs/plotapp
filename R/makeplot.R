@@ -99,6 +99,11 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
       myplot$layers[[1]]$geom_params$size = 3;
     }
   }
+  
+  #Robert wants the sizes less big/small
+  if(!missing(size)){
+    myplot <- myplot + scale_size_continuous(range=c(2,5));
+  }
 
   #add facet
   if(!missing(facet)){
