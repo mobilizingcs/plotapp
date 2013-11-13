@@ -145,8 +145,18 @@ $(function() {
       
       //populate campaign dropdown
 			oh.user.info(function(data){
-        $.each(data[x].campaigns, function(urn, title){
-          $("#campaignfield").append($("<option>").text(title).attr("value", urn));
+        var campaigndata = $.map(data[x].campaigns, function(title, urn) {return [{urn:urn, title:title}]});
+        campaigndata.sort(function(a,b){
+          var nameA = a.title.toLowerCase();
+          var nameB = b.title.toLowerCase();
+          if (nameA < nameB) //sort string ascending
+            return -1 
+          if (nameA > nameB)
+            return 1
+          return 0
+        }); 
+        $.each(campaigndata, function(i, value){
+          $("#campaignfield").append($("<option>").text(value.title).attr("value", value.urn));
         });
         $("#campaignfield").val("");
 			});
