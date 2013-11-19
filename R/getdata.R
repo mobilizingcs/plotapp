@@ -16,7 +16,9 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   }
   names(mydata) <- sub("^prompt.id.", "", names(mydata));
   mydata$date <- as.Date(mydata$context.timestamp);
-  mydata$timestamp <- as.POSIXct(mydata$context.timestamp);
+  mydata$datetime <- as.POSIXct(mydata$context.timestamp);
+  mydata$time <- strptime(format(mydata$datetime, "%H:%M:%S"), format="%H:%M:%S");
+  mydata$day <- factor(format(mydata$datetime, "%a"), ordered=TRUE, levels=c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
   mydata$user <- as.factor(mydata$user.id);
   mydata$privacy <- as.factor(mydata$survey.privacy_state);
   
