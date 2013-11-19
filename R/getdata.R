@@ -23,11 +23,11 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$privacy <- as.factor(mydata$survey.privacy_state);
   
   #some fixes
-  for(i in seq_along(mydata)){
-    if(length(mydata[[i]]) && is.numeric(mydata[[i]]) && (length(unique(mydata[[i]])) < 8)){
-      mydata[[i]] <- as.factor(mydata[[i]]);
-    }
-  }
+  #for(i in seq_along(mydata)){
+  #  if(length(mydata[[i]]) && is.numeric(mydata[[i]]) && (length(unique(mydata[[i]])) < 8)){
+  #    mydata[[i]] <- as.factor(mydata[[i]]);
+  #  }
+  #}
   
   return(mydata);
 }
