@@ -60,7 +60,7 @@ $(function() {
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
     $("#xfield").empty().append($("<option>").text("date")).append($("<option>").text("time")).append($("<option>").text("day")).append($("<option>").text("datetime")).append($("<option>").text("user")).append($("<option>").text("privacy"));
-    $("#yfield").empty().append($("<option>").val("").text("response count")).append($("<option>").text("day"));
+    $("#yfield").empty().append($("<option>").val("").text("response count"));
     $("#colorfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));
     $("#sizefield").empty().append($("<option>").val("").text("—"));   
     $("#facetfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));     
