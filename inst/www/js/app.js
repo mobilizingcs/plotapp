@@ -2,7 +2,7 @@ $(function() {
   
   //this is where we set the opencpu server in case it is hosted elsewhere
   if(!location.pathname.match("/library/plotbuilder")){
-    opencpu.seturl("/ocpu/library/plotbuilder/R");
+    ocpu.seturl("/ocpu/library/plotbuilder/R");
   }
   
   //some globals
@@ -85,7 +85,7 @@ $(function() {
   
   
   function getdata(cb){
-    return opencpu.r_fun_call("getdata", {
+    return ocpu.call("getdata", {
       campaign_urn : campaign_urn,
       serverurl : serverurl,
       token : $.cookie("auth_token"),
@@ -108,7 +108,7 @@ $(function() {
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
     
     //chain it    
-    return $("#plotdiv").r_fun_plot("makeplot", args);
+    return $("#plotdiv").rplot("makeplot", args);
   }
   
   $("#plotbutton").on("click", function(){
