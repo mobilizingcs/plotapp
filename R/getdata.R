@@ -25,17 +25,7 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   #remove redundant columns
   mydata$survey.privacy_state <- NULL;
   mydata$context.timestamp <- NULL;
-    
-  #some fixes
-  #for(i in seq_along(mydata)){
-  #  if(length(mydata[[i]]) && is.numeric(mydata[[i]]) && (length(unique(mydata[[i]])) < 8)){
-  #    mydata[[i]] <- as.factor(mydata[[i]]);
-  #  }
-  #}
   
-  #print some statistics
-  options(width=100);
-  writeLines(capture.output(summary(mydata)), "summary.txt")
-  
-  return(mydata);
+  #return ze data
+  invisible(mydata);
 }

@@ -227,7 +227,7 @@
   
   //plotting widget
   //to be called on an (empty) div.
-  $.fn.rplot = function(fun, args) {
+  $.fn.rplot = function(fun, args, cb) {
     var targetdiv = this;
     var myplot = initplot(targetdiv);
 
@@ -238,6 +238,9 @@
     // call the function
     return r_fun_call(fun, args, function(tmp) {
       myplot.setlocation(tmp.getLoc());
+      
+      //call success handler as well
+      cb(tmp);
     }).always(function(){
       myplot.spinner.hide();      
     });

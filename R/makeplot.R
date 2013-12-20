@@ -111,8 +111,22 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
     myplot <- myplot + facet_wrap(as.formula(paste("~", facet)))
   }
   
+  #print the plot
   print(myplot)
-  invisible();  
+  
+  #collect summary data of x and y
+  summarydata <- if(missing(y)){
+    data[x];
+  } else {
+    data[c(x,y)];
+  }
+  
+  #print some statistics
+  options(width=100);
+  writeLines(capture.output(summary(summarydata)), "summary.txt")
+  
+  #return summarydata
+  invisible(summarydata); 
 }
 
 #quantitative variables are numeric, date or time.
