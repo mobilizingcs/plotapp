@@ -87,6 +87,19 @@
               <select id="facetfield" class="form-control"></select> 
             </div>    
             
+            <div id="fittypefieldgroup" class="form-group">
+              <label class="control-label" for="fittypefield">Fit Line</label>
+              <select id="fittypefield" class="form-control" disabled="disabled">
+                <option value="">—</option> 
+                <option value="linear">linear</option> 
+                <option value="quadratic">quadratic</option>
+                <option value="cubic">cubic</option>
+                <option value="exponential">exponential</option> 
+                <option value="log">log</option>
+                <option value="loess">loess</option>
+              </select> 
+            </div>  
+
             <div id="subsetfieldgroup" class="form-group">
               <label class="control-label" for="subsetfield">Subset/Filter (optional)</label>
               <input type="text" id="subsetfield" class="form-control" placeholder="example: myPrompt < 30"> 
@@ -103,7 +116,10 @@
         <div class="page-header">
           <h1>Plot<span class="pull-right" id="username"></span></h1>
         </div>
+
+        <div id="alertdiv"></div>
         <div id="plotdiv"></div>
+
       </div>  
     </div>
     

@@ -25,7 +25,7 @@
 #' makeplot(CO2, x='Treatment', y='Type')
 #' makeplot(CO2, x='Treatment', y='Plant', facet='Type', fill='Plant')
 #' @export
-makeplot <- function(data, subset, x, y, fill, size, facet){
+makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
   
   #subset filtering
   if(!missing(subset)){
@@ -65,7 +65,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
       dotsize <- min(1, bins/peak/aspectratio);
       myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + opts(axis.text.y=theme_blank());
     } else {
-      myplot <- myplot + geom_bar();
+      myplot <- myplot + geom_bar(colour=NA);
     }
   } else {
     #two dimensional plots
@@ -75,9 +75,10 @@ makeplot <- function(data, subset, x, y, fill, size, facet){
     #} else if
     if(is.quant(xvar)){
       if(is.quant(yvar)){
-        myplot <- myplot + 
-          geom_point() +
-          geom_smooth(method="lm", se=FALSE, linetype="dashed", size=1);
+        myplot <- myplot + geom_point();
+        if(!missing(fittype) && length(fittype)){
+          myplot <- myplot + fitline(fittype);
+        }
       } else {
         myplot <- myplot + geom_point(position=position_jitter(width = 0, height=0.15));
       }

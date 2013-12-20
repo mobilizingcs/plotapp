@@ -59,15 +59,30 @@ $(function() {
   function populatevars(){
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
-    $("#xfield").empty().append($("<option>").text("date")).append($("<option>").text("time")).append($("<option>").text("day")).append($("<option>").text("datetime")).append($("<option>").text("user")).append($("<option>").text("privacy"));
+    $("#sizefield").attr("disabled", "disabled");
+    $("#fittypefield").attr("disabled", "disabled");    
+    $("#xfield").empty()
+      .append($("<option>").text("date").attr("data-promptType", "number"))
+      .append($("<option>").text("time").attr("data-promptType", "number"))
+      .append($("<option>").text("day"))
+      .append($("<option>").text("datetime").attr("data-promptType", "number"))
+      .append($("<option>").text("user"))
+      .append($("<option>").text("privacy"));
+
     $("#yfield").empty().append($("<option>").val("").text("response count"));
-    $("#colorfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));
+
+    $("#colorfield").empty()
+      .append($("<option>").val("").text("—"))
+      .append($("<option>").text("user"))
+      .append($("<option>").text("privacy"))
+      .append($("<option>").text("day"));
+
     $("#sizefield").empty().append($("<option>").val("").text("—"));   
     $("#facetfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));     
     $.each(mydata[surveyid].prompts, function(i, val){
       if(val.promptType == "text" || val.promptType == "photo") return;
-      $("#xfield").append($("<option>").val(val.id).text(val.id)); //.text(val.promptlabel)); 
-      $("#yfield").append($("<option>").val(val.id).text(val.id));  
+      $("#xfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType)); //.text(val.promptlabel)); 
+      $("#yfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType));  
       if(val.promptType == "number"){
         $("#sizefield").append($("<option>").val(val.id).text(val.id));  
       }
@@ -76,13 +91,16 @@ $(function() {
         $("#facetfield").append($("<option>").val(val.id).text(val.id));
       }
     });
-    
-    $("#yfield").on("change", function(){
-      $(this).val() ? $("#sizefield").removeAttr("disabled") : $("#sizefield").val("").attr("disabled", "disabled");
-    });
   }
-  
-  
+
+  function disableinputs(e){
+    $("#yfield").val() ? $("#sizefield").removeAttr("disabled") : $("#sizefield").val("").attr("disabled", "disabled");
+    if($("#yfield option:selected").attr("data-promptType") == "number" && $("#xfield option:selected").attr("data-promptType") ==  "number"){
+      $("#fittypefield").removeAttr("disabled");
+    } else {
+      $("#fittypefield").val("").attr("disabled", "disabled");
+    }
+  }
   
   function getdata(cb){
     return ocpu.call("getdata", {
@@ -106,24 +124,31 @@ $(function() {
     if($("#sizefield").val()) args.size = $("#sizefield").val();
     if($("#facetfield").val()) args.facet = $("#facetfield").val();
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
+    if($("#fittypefield").val()) args.fittype = $("#fittypefield").val();
     
     //chain it    
     return $("#plotdiv").rplot("makeplot", args);
   }
-  
+
+  function errorbox(message){
+    $("#alertdiv").append('<div id="alertbox" class="alert alert-danger alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
+  }
+
   $("#plotbutton").on("click", function(){
     if(!campaign_urn) {
       $("#campaigngroup").addClass("has-error");
       return;
     }
     
+    $("#alertdiv").empty();
+
     $("#plotbutton").attr("disabled", "disabled");    
     var req1 = getdata(function(session){
       var req2 = makeplot(session).fail(function(){
-        alert("Failed to make plot: " + req2.responseText);
+        errorbox("<strong>Failed to make plot</strong> " + req2.responseText.split("In call:")[0]);
       });
     }).fail(function(){
-      alert("Failed to download data from Ohmage: " + req1.responseText);
+      errorbox("<strong>Failed to download data from Ohmage</strong> " + req1.responseText.split("In call:")[0]);
       $("#plotbutton").removeAttr("disabled");
     }).done(function(){
       $("#plotbutton").removeAttr("disabled")
@@ -137,6 +162,9 @@ $(function() {
     }
     loadcampaign()
   })
+
+  $("#xfield").on("change", disableinputs);
+  $("#yfield").on("change", disableinputs);
   
   //init page
 	oh.ping(function(){
