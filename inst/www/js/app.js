@@ -1,10 +1,5 @@
 $(function() {
-  
-  //this is where we set the opencpu server in case it is hosted elsewhere
-  if(!location.pathname.match("/library/plotbuilder")){
-    ocpu.seturl("/ocpu/library/plotbuilder/R");
-  }
-  
+    
   //some globals
   var campaign_urn;
   var campaigndata = {};
@@ -61,6 +56,7 @@ $(function() {
     var surveyid = $("#surveyfield").val();
     $("#sizefield").attr("disabled", "disabled");
     $("#fittypefield").attr("disabled", "disabled");    
+
     $("#xfield").empty()
       .append($("<option>").text("date").attr("data-promptType", "number"))
       .append($("<option>").text("time").attr("data-promptType", "number"))
@@ -170,6 +166,11 @@ $(function() {
 	oh.ping(function(){
 		oh.user.whoami(function(x){
       $("#username").text(x);
+
+      //this is where we set the opencpu server in case it is hosted elsewhere
+      if(!location.pathname.match("/library/plotbuilder")){
+        ocpu.seturl("/ocpu/library/plotbuilder/R");
+      }      
       
       //populate campaign dropdown
 			oh.user.info(function(data){
