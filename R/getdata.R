@@ -22,6 +22,10 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$user <- as.factor(mydata$user.id);
   mydata$privacy <- as.factor(mydata$survey.privacy_state);
   
+  #remove redundant columns
+  mydata$survey.privacy_state <- NULL;
+  mydata$context.timestamp <- NULL;
+    
   #some fixes
   #for(i in seq_along(mydata)){
   #  if(length(mydata[[i]]) && is.numeric(mydata[[i]]) && (length(unique(mydata[[i]])) < 8)){
