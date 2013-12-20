@@ -137,11 +137,15 @@ $(function() {
     }
     
     $("#alertdiv").empty();
+    $("#summarydiv pre").empty()
 
     $("#plotbutton").attr("disabled", "disabled");    
     var req1 = getdata(function(session){
       var req2 = makeplot(session).fail(function(){
         errorbox("<strong>Failed to make plot</strong> " + req2.responseText.split("In call:")[0]);
+      });
+      var req3 = session.getFile("summary.txt", function(txt){
+        $("#summarydiv pre").empty().text(txt);
       });
     }).fail(function(){
       errorbox("<strong>Failed to download data from Ohmage</strong> " + req1.responseText.split("In call:")[0]);

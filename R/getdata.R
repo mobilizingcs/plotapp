@@ -29,8 +29,9 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   #  }
   #}
   
-  #print some statistics to the console
-  print(summary(mydata))
+  #print some statistics
+  options(width=100);
+  writeLines(capture.output(summary(mydata)), "summary.txt")
   
   return(mydata);
 }
