@@ -103,6 +103,7 @@ $(function() {
       campaign_urn : campaign_urn,
       serverurl : serverurl,
       token : $.cookie("auth_token"),
+      privacy_state : "shared",
       start_date : $("#fromfield").val(),
       end_date : $("#tofield").val()
     }, cb);
