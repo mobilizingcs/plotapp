@@ -10,14 +10,14 @@ oh.utils.delayexec = function(){
 	var timer;
 	function exec(call, delay){
 		if(timer) {
-			dashboard.message("clear " + timer);			
+			dashboard.message("clear " + timer);
 			clearTimeout(timer);
 		}
 		timer = setTimeout(function(){
 			timer = null;
 			call();
 		}, delay);
-		dashboard.message("added " + timer)		
+		dashboard.message("added " + timer)
 	};
 	return exec;
 }
@@ -73,7 +73,7 @@ oh.utils.gethour = function(item){
 oh.utils.state = function(mycampaign, myresponse){
 	if(!mycampaign){
 		return window.location.hash.substring(1).split("/");
-	} 
+	}
 	if(!myresponse){
 		window.location.hash = mycampaign;
 		return;
@@ -90,9 +90,9 @@ oh.utils.readconfig = function(next){
 		dashboard.config = data;
 		if(next) next();
 	})
-	.fail(function(err) { 
-		alert("error loading config.json"); 
-		dashboard.message(err) 
+	.fail(function(err) {
+		alert("error loading config.json");
+		dashboard.message(err)
 	});
 }
 
@@ -101,7 +101,7 @@ oh.utils.error = function(msg){
 }
 
 oh.call = function(path, data, datafun){
-	
+
 	//THIS IS A HACK FOR LAUSD
 	function errorMessage(code, text){
 		if(path == "/user/change_password" && code == "0203"){
@@ -112,7 +112,7 @@ oh.call = function(path, data, datafun){
 		//default message
 		return "Fail: " + path + ": " + code + ".\n" + text;
 	}
-	
+
 	function processError(errors){
 		if(errors[0].code && errors[0].code == "0200"){
 			var pattern = /(is unknown)|(authentication token)|(not provided)/i;
@@ -125,19 +125,19 @@ oh.call = function(path, data, datafun){
 		} else {
 			alert(errorMessage(errors[0].code, errors[0].text));
 		}
-	}	
-	
+	}
+
 	//input processing
-	var data = data ? data : {};		
-	
+	var data = data ? data : {};
+
 	//default parameter
 	data.client = "plotapp"
-		
+
 	//add auth_token from cookie
 	if($.cookie('auth_token')){
 		data.auth_token = $.cookie('auth_token');
 	}
-		
+
 	var myrequest = $.ajax({
 		type: "POST",
 		url : "/app" + path,
@@ -152,7 +152,7 @@ oh.call = function(path, data, datafun){
 			if(!rsptxt || rsptxt == ""){
 				alert("Fail: " + path + ". Ohmage returned undefined error.");
 				return false;
-			}			
+			}
 			var response = jQuery.parseJSON(rsptxt);
 			if(response.result == "success"){
 				if(datafun) datafun(response)
@@ -168,14 +168,14 @@ oh.call = function(path, data, datafun){
 		}
 	}).error(function(){
 		alert("Fail: " + path + ": " + myrequest.status + "\n\n" + myrequest.responseText)
-	});		
-	
+	});
+
 	return(myrequest)
 }
 
 oh.login = function(user, password, cb){
-	var req = oh.call("/user/auth_token", { 
-		user: user, 
+	var req = oh.call("/user/auth_token", {
+		user: user,
 		password: password
 	}, function(response){
 		if(!cb) return;
@@ -189,7 +189,7 @@ oh.logout = function(cb){
 }
 
 oh.sendtologin = function(){
-	window.location = "/web/#login"
+	window.location = "../web/#login"
 }
 
 oh.campaign_read = function(cb){
@@ -256,7 +256,7 @@ oh.class.read = function(class_urn, cb){
 	}, function(res){
 		cb && cb(res.data);
 	});
-	return req;	
+	return req;
 }
 
 oh.class.create = function(class_urn, class_name, cb){
@@ -267,7 +267,7 @@ oh.class.create = function(class_urn, class_name, cb){
 		if(!cb) return;
 		cb()
 	});
-	return req;	
+	return req;
 }
 
 oh.class.delete = function(class_urn, cb){
@@ -277,7 +277,7 @@ oh.class.delete = function(class_urn, cb){
 		if(!cb) return;
 		cb()
 	});
-	return req;	
+	return req;
 }
 
 oh.class.adduser = function(class_urn, username, cb){
@@ -295,7 +295,7 @@ oh.class.removeuser = function(class_urn, username, cb){
 		user_list_remove : username
 	}, function(res){
 		cb && cb();
-	});	
+	});
 }
 
 oh.class.search = function(filter, cb){
@@ -320,24 +320,24 @@ oh.campaign.create = function(xml, campaign_urn, campaign_name, class_urn, cb){
 		xml : xml,
 		privacy_state : "shared",
 		running_state : "running",
-		campaign_urn : campaign_urn,	
+		campaign_urn : campaign_urn,
 		campaign_name : campaign_name,
-		class_urn_list : class_urn		
+		class_urn_list : class_urn
 	}, function(res){
 		if(!cb) return;
 		cb()
 	});
-	return req;		
+	return req;
 }
 
 oh.campaign.delete = function(campaign_urn, cb){
 	var req = oh.call("/campaign/delete", {
-		campaign_urn : campaign_urn,		
+		campaign_urn : campaign_urn,
 	}, function(res){
 		if(!cb) return;
 		cb()
 	});
-	return req;	
+	return req;
 }
 
 oh.document.create = function(document_name, document, class_urn, cb){
