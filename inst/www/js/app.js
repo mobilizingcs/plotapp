@@ -80,7 +80,9 @@ $(function() {
       $("#xfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType)); //.text(val.promptlabel)); 
       $("#yfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType));  
       if(val.promptType == "number"){
-        $("#sizefield").append($("<option>").val(val.id).text(val.id));  
+        $("#sizefield").append($("<option>").val(val.id).text(val.id));
+        var force_factor = "factor(" + val.id + ")";
+        $("#xfield").append($("<option>").val(force_factor).text(force_factor).attr("data-promptType", val.promptType));
       }
       if(val.promptType == "single_choice"){
         $("#colorfield").append($("<option>").val(val.id).text(val.id));           

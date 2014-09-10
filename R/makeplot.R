@@ -37,7 +37,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
   }
   
   #create the basic ggplot object
-  aeslist <- list ( x = as.name(x) );  
+  aeslist <- list ( x = parse(text=x)[[1]] );  
   
   if(!missing(fill)) {
     aeslist$fill <- as.name(fill);
@@ -52,7 +52,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
   myplot <- ggplot(data, structure(aeslist, class="uneval"))
   
   #extract x from data
-  xvar <- eval(as.name(x), data);
+  xvar <- eval(parse(text=x)[[1]], data);
   
   #decide what plot to make
   if(missing(y)){
@@ -63,7 +63,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
       peak <- max(table(round(xvar/binwidth)))
       aspectratio <- 1.8;
       dotsize <- min(1, bins/peak/aspectratio);
-      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + opts(axis.text.y=theme_blank());
+      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + theme(axis.text.y=element_blank());
     } else {
       myplot <- myplot + geom_bar(colour=NA);
     }
@@ -115,10 +115,10 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype){
   print(myplot)
   
   #collect summary data of x and y
-  summarydata <- if(missing(y)){
-    data[x];
-  } else {
-    data[c(x,y)];
+  summarydata <- data.frame(x = eval(parse(text=x)[[1]], data))
+  names(summarydata) <- x;
+  if(!missing(y)){
+    summarydata[2] <- data[y];
   }
   
   #print some statistics
