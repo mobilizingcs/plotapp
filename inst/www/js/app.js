@@ -1,11 +1,11 @@
 $(function() {
-    
+
   //some globals
   var campaign_urn;
   var campaigndata = {};
   var today = new Date();
   var serverurl = location.protocol + "//" + location.host + "/app"
-  
+
   function loadcampaign(){
     $("#surveyfield").empty();
     if(!campaign_urn) {
@@ -20,7 +20,7 @@ $(function() {
         var xml = $(jQuery.parseXML(res));
         $.each($("survey", xml), function(i, survey){
           var promptdata = {}
-          var prompts = $(">contentList>prompt", survey);        
+          var prompts = $(">contentList>prompt", survey);
           $.each(prompts, function(i, prompt){
             var promptid = $(">id",prompt).text();
             promptdata[promptid] = {
@@ -36,26 +36,26 @@ $(function() {
             prompts : promptdata
           };
         });
-        
-        //recursive in case user changed selection in the mean time        
+
+        //recursive in case user changed selection in the mean time
         campaigndata[campaign_urn] = mydata;
         loadcampaign();
       });
     }
   }
-  
+
   function populatesurvey(mydata){
     $.each(mydata, function(i, survey){
       $("#surveyfield").append($("<option>").val(survey.id).text(survey.title));
     });
     populatevars();
   }
-  
+
   function populatevars(){
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
     $("#sizefield").attr("disabled", "disabled");
-    $("#fittypefield").attr("disabled", "disabled");    
+    $("#fittypefield").attr("disabled", "disabled");
 
     $("#xfield").empty()
       .append($("<option>").text("date").attr("data-promptType", "number"))
@@ -73,19 +73,20 @@ $(function() {
       .append($("<option>").text("privacy"))
       .append($("<option>").text("day"));
 
-    $("#sizefield").empty().append($("<option>").val("").text("—"));   
-    $("#facetfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));     
+    $("#sizefield").empty().append($("<option>").val("").text("—"));
+    $("#facetfield").empty().append($("<option>").val("").text("—")).append($("<option>").text("user")).append($("<option>").text("privacy")).append($("<option>").text("day"));
     $.each(mydata[surveyid].prompts, function(i, val){
       if(val.promptType == "text" || val.promptType == "photo") return;
-      $("#xfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType)); //.text(val.promptlabel)); 
-      $("#yfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType));  
+      $("#xfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType)); //.text(val.promptlabel));
+      $("#yfield").append($("<option>").val(val.id).text(val.id).attr("data-promptType", val.promptType));
       if(val.promptType == "number"){
         $("#sizefield").append($("<option>").val(val.id).text(val.id));
         var force_factor = "factor(" + val.id + ")";
-        $("#xfield").append($("<option>").val(force_factor).text(force_factor).attr("data-promptType", val.promptType));
+        //comment out cause is confusing apparently
+        //$("#xfield").append($("<option>").val(force_factor).text(force_factor).attr("data-promptType", val.promptType));
       }
       if(val.promptType == "single_choice"){
-        $("#colorfield").append($("<option>").val(val.id).text(val.id));           
+        $("#colorfield").append($("<option>").val(val.id).text(val.id));
         $("#facetfield").append($("<option>").val(val.id).text(val.id));
       }
     });
@@ -99,7 +100,7 @@ $(function() {
       $("#fittypefield").val("").attr("disabled", "disabled");
     }
   }
-  
+
   function getdata(cb){
     return ocpu.call("getdata", {
       campaign_urn : campaign_urn,
@@ -110,13 +111,13 @@ $(function() {
       end_date : $("#tofield").val()
     }, cb);
   }
-  
+
   function makeplot(data){
     var args = {
       data : data,
       x : $("#xfield").val()
     };
-    
+
     //setting optional arguments
     if($("#yfield").val()) args.y = $("#yfield").val();
     if($("#colorfield").val()) args.fill = $("#colorfield").val();
@@ -124,8 +125,8 @@ $(function() {
     if($("#facetfield").val()) args.facet = $("#facetfield").val();
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
     if($("#fittypefield").val()) args.fittype = $("#fittypefield").val();
-    
-    //chain it    
+
+    //chain it
     return $("#plotdiv").rplot("makeplot", args, function(session){
       session.getFile("summary.txt", function(txt){
         $("#summarydiv pre").empty().text(txt);
@@ -142,11 +143,11 @@ $(function() {
       $("#campaigngroup").addClass("has-error");
       return;
     }
-    
+
     $("#alertdiv").empty();
     $("#summarydiv pre").empty()
 
-    $("#plotbutton").attr("disabled", "disabled");    
+    $("#plotbutton").attr("disabled", "disabled");
     var req1 = getdata(function(session){
       var req2 = makeplot(session).fail(function(){
         errorbox("<strong>Failed to make plot</strong> " + req2.responseText.split("In call:")[0]);
@@ -158,7 +159,7 @@ $(function() {
       $("#plotbutton").removeAttr("disabled")
     });
   });
-  
+
   $("#campaignfield").change(function(){
     campaign_urn = $("#campaignfield option:selected").val();
     if(campaign_urn){
@@ -169,7 +170,7 @@ $(function() {
 
   $("#xfield").on("change", disableinputs);
   $("#yfield").on("change", disableinputs);
-  
+
   //init page
 	oh.ping(function(){
 		oh.user.whoami(function(x){
@@ -178,8 +179,8 @@ $(function() {
       //this is where we set the opencpu server in case it is hosted elsewhere
       if(!location.pathname.match("/library/plotbuilder")){
         ocpu.seturl("/ocpu/library/plotbuilder/R");
-      }      
-      
+      }
+
       //populate campaign dropdown
 			oh.user.info(function(data){
         var campaigndata = $.map(data[x].campaigns, function(title, urn) {return [{urn:urn, title:title}]});
@@ -187,27 +188,27 @@ $(function() {
           var nameA = a.title.toLowerCase();
           var nameB = b.title.toLowerCase();
           if (nameA < nameB) //sort string ascending
-            return -1 
+            return -1
           if (nameA > nameB)
             return 1
           return 0
-        }); 
+        });
         $.each(campaigndata, function(i, value){
           $("#campaignfield").append($("<option>").text(value.title).attr("value", value.urn));
         });
         $("#campaignfield").val("");
 			});
-      
+
       //prevent timeouts while using the application
       oh.keepalive();
 		});
 	});
-  
+
   $("#paramform .input-append.date").datepicker({format: "yyyy-mm-dd"});
-  $("#tofield").val(today.getFullYear() + "-" + zeroFill(today.getMonth()+1, 2) + "-" + zeroFill(today.getDate(),2)); 
+  $("#tofield").val(today.getFullYear() + "-" + zeroFill(today.getMonth()+1, 2) + "-" + zeroFill(today.getDate(),2));
   $("#plotdiv").resizable();
   $("#surveyfield").change(populatevars);
-  
+
 });
 
 function zeroFill( number, width ) {
