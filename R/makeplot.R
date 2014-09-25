@@ -137,7 +137,8 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
     
     #formulas dont coerse dates
     if(is(data[[x]], "Date")){
-      data[[x]] <- as.numeric(data[[x]])
+      data[[x]] <- as.numeric(data[[x]]);
+      data[[x]] <- data[[x]] - min(data[[x]]);
     }
     mymodel <- eval(call("lm", as.formula(myformula), quote(data)))
     summarytext <- c(summarytext, capture.output(print(summary(mymodel))))
