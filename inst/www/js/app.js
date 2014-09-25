@@ -55,7 +55,8 @@ $(function() {
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
     $("#sizefield").attr("disabled", "disabled");
-    $("#fittypefield").attr("disabled", "disabled");
+    $("#fittypefield").val("").attr("disabled", "disabled");
+    $("#fitequation").prop("checked", false).attr("disabled", "disabled");
 
     $("#xfield").empty()
       .append($("<option>").text("date").attr("data-promptType", "number"))
@@ -98,6 +99,7 @@ $(function() {
       $("#fittypefield").removeAttr("disabled");
     } else {
       $("#fittypefield").val("").attr("disabled", "disabled");
+      $("#fitequation").prop("checked", false).attr("disabled", "disabled");
     }
   }
 
@@ -124,7 +126,10 @@ $(function() {
     if($("#sizefield").val()) args.size = $("#sizefield").val();
     if($("#facetfield").val()) args.facet = $("#facetfield").val();
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
-    if($("#fittypefield").val()) args.fittype = $("#fittypefield").val();
+    if($("#fittypefield").val()) {
+      args.fittype = $("#fittypefield").val();
+      args.fitequation = $("#fitequation").prop("checked");
+    }
 
     //chain it
     return $("#plotdiv").rplot("makeplot", args, function(session){
@@ -166,6 +171,14 @@ $(function() {
       $("#campaigngroup").removeClass("has-error");
     }
     loadcampaign()
+  })
+
+  $("#fittypefield").change(function(){
+    if($("#fittypefield option:selected").val()){
+      $("#fitequation").removeAttr("disabled");
+    } else {
+      $("#fitequation").prop("checked", false).attr("disabled", "disabled");
+    }
   })
 
   $("#xfield").on("change", disableinputs);
