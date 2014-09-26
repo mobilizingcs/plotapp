@@ -141,7 +141,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
       data[[x]] <- data[[x]] - min(data[[x]]);
     }
     mymodel <- eval(call("lm", as.formula(myformula), quote(data)))
-    summarytext <- c(summarytext, capture.output(print(summary(mymodel))))
+    summarytext <- c(summarytext, "", capture.output(print(coef(mymodel))))
   }
   
   writeLines(summarytext, "summary.txt")
