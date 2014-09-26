@@ -108,7 +108,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
 
   #add facet
   if(!missing(facet)){
-    myplot <- myplot + facet_wrap(as.formula(paste("~", facet)))
+    myplot <- myplot + facet_grid(as.formula(paste(facet,"~.")))
   }
 
   #print the plot
