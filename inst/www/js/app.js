@@ -66,7 +66,9 @@ $(function() {
       .append($("<option>").text("user"))
       .append($("<option>").text("privacy"));
 
-    $("#yfield").empty().append($("<option>").val("").text("response count"));
+    $("#yfield").empty()
+      .append($("<option>").val("").text("responses (count)"))
+      .append($("<option>").val("dotplot").text("responses (dotplot)"));
 
     $("#colorfield").empty()
       .append($("<option>").val("").text("—"))
@@ -94,7 +96,11 @@ $(function() {
   }
 
   function disableinputs(e){
-    $("#yfield").val() ? $("#sizefield").removeAttr("disabled") : $("#sizefield").val("").attr("disabled", "disabled");
+    if($("#yfield").val() && $("#yfield").val() != "dotplot") {
+      $("#sizefield").removeAttr("disabled");
+    } else {
+      $("#sizefield").val("").attr("disabled", "disabled");
+    }    
     if($("#yfield option:selected").attr("data-promptType") == "number" && $("#xfield option:selected").attr("data-promptType") ==  "number"){
       $("#fittypefield").removeAttr("disabled");
     } else {

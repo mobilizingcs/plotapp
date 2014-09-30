@@ -44,7 +44,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
     aeslist$colour <- as.name(fill);
   }
 
-  if(!missing(y)){
+  if(!missing(y) && (y != "dotplot")){
     aeslist$y <- as.name(y);
   }
 
@@ -53,20 +53,20 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
 
   #extract x from data
   xvar <- eval(parse(text=x)[[1]], data);
-
-  #decide what plot to make
+  
+#     if(is.numeric(xvar)){
+#       bins <- max(30, round(length(xvar) ^ 0.75))
+#       binwidth <- diff(range(xvar)) / bins;
+#       peak <- max(table(round(xvar/binwidth)))
+#       aspectratio <- 1.8;
+#       dotsize <- min(1, bins/peak/aspectratio);
+#       myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + theme(axis.text.y=element_blank());
+#     }    
+    
   if(missing(y)){
-    #one dimensional plots
-    if(is.numeric(xvar)){
-      bins <- max(30, round(length(xvar) ^ 0.75))
-      binwidth <- diff(range(xvar)) / bins;
-      peak <- max(table(round(xvar/binwidth)))
-      aspectratio <- 1.8;
-      dotsize <- min(1, bins/peak/aspectratio);
-      myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + theme(axis.text.y=element_blank());
-    } else {
-      myplot <- myplot + geom_bar(colour=NA);
-    }
+    myplot <- myplot + geom_bar(colour=NA);
+  } else if(y == "dotplot"){
+    myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot") + ylab("") + theme(axis.text.y=element_blank());    
   } else {
     #two dimensional plots
     yvar <- eval(as.name(y), data);
@@ -117,7 +117,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
   #collect summary data of x and y
   summarydata <- data.frame(x = eval(parse(text=x)[[1]], data))
   names(summarydata) <- x;
-  if(!missing(y)){
+  if(!missing(y) && (y != "dotplot")){
     summarydata[2] <- data[y];
   }
 
