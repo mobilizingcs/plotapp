@@ -8,6 +8,7 @@ $(function() {
 
   function loadcampaign(){
     $("#surveyfield").empty();
+    $("#subsetfield").val("");
     if(!campaign_urn) {
       $("#campaigngroup").addClass("has-error");
       return;
