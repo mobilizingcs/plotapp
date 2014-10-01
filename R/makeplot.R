@@ -131,16 +131,22 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
       linear = paste0(y, "~", x),
       quadratic = paste0(y, "~", x, " + I(", x, "^2)"),
       cubic = paste0(y, "~", x, " + I(", x, "^2) + I(", x, "^3)"),
-      exponential = paste0(y, "~exp(", x, ")"),
+      exponential = paste0(y, "~", x),
       log = paste(y, "~log(", x, ")")
     )
+    
+    family <- if(fittype == "exponential") {
+      gaussian("log")
+    } else{
+      gaussian("identity")
+    }
     
     #formulas dont coerse dates
     if(is(data[[x]], "Date")){
       data[[x]] <- as.numeric(data[[x]]);
-      data[[x]] <- data[[x]] - min(data[[x]]);
+      data[[x]] <- data[[x]] - min(data[[x]]) + 1;
     }
-    mymodel <- eval(call("lm", as.formula(myformula), quote(data)))
+    mymodel <- eval(call("glm", as.formula(myformula), quote(data), family=family))
     summarytext <- c(summarytext, "", capture.output(print(coef(mymodel))))
   }
   
