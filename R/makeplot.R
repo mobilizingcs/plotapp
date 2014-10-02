@@ -64,10 +64,18 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
 #     }    
     
   if(missing(y)){
-    myplot <- myplot + geom_bar(colour=NA);
+    if(is.quant(xvar)){
+      myplot <- myplot + geom_bar(colour=NA, binwidth = calculate_smart_binwidth(xvar));
+    } else {
+      myplot <- myplot + geom_bar(colour=NA);
+    }
   } else if(y == "dotplot"){
-    dotmethod <- if(is.numeric(xvar)) {"histodot"} else {"dotdensity"};
-    myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = dotmethod) + ylab("") + theme(axis.text.y=element_blank());    
+    if(is.quant(xvar)){
+      myplot <- myplot + geom_dotplot(method = "histodot", binwidth = calculate_smart_binwidth(xvar));
+    } else {
+      myplot <- myplot + geom_dotplot();
+    }
+    myplot <- myplot + ylab("") + theme(axis.text.y=element_blank());
   } else {
     #two dimensional plots
     yvar <- eval(as.name(y), data);
