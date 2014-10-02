@@ -1,6 +1,6 @@
 # This function calculates a default binwidth that will work better
 # for the dotplot with large n than the ggplot2 default.
-calculate_smart_binwidth <- function(x, aspect_ratio = 3/4){
+calculate_smart_binwidth <- function(x, aspect_ratio = 2/3){
   x <- as.numeric(x)
   nbins <- max(30, round(sqrt(length(x)) / aspect_ratio))
   range <- range(x, na.rm = TRUE, finite = TRUE)

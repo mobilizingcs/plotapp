@@ -52,36 +52,21 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
   myplot <- ggplot(data, structure(aeslist, class="uneval"))
 
   #extract x from data
-  xvar <- eval(parse(text=x)[[1]], data);
+  xvar <- eval(parse(text=x)[[1]], data);  
   
-#     if(is.numeric(xvar)){
-#       bins <- max(30, round(length(xvar) ^ 0.75))
-#       binwidth <- diff(range(xvar)) / bins;
-#       peak <- max(table(round(xvar/binwidth)))
-#       aspectratio <- 1.8;
-#       dotsize <- min(1, bins/peak/aspectratio);
-#       myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot", binwidth=binwidth, dotsize=dotsize) + ylab("") + theme(axis.text.y=element_blank());
-#     }    
-    
+  #make a plot
   if(missing(y)){
-    if(is.quant(xvar)){
-      myplot <- myplot + geom_bar(colour=NA, binwidth = calculate_smart_binwidth(xvar));
-    } else {
-      myplot <- myplot + geom_bar(colour=NA);
-    }
+    myplot <- myplot + geom_bar(colour=NA);
   } else if(y == "dotplot"){
     if(is.quant(xvar)){
-      myplot <- myplot + geom_dotplot(method = "histodot", binwidth = calculate_smart_binwidth(xvar));
+      myplot <- myplot + geom_dotplot(stackgroups = TRUE, method = "histodot", binwidth = calculate_smart_binwidth(xvar));
     } else {
-      myplot <- myplot + geom_dotplot();
+      myplot <- myplot + geom_dotplot(stackgroups = TRUE);
     }
     myplot <- myplot + ylab("") + theme(axis.text.y=element_blank());
   } else {
     #two dimensional plots
     yvar <- eval(as.name(y), data);
-    #if(is(xvar, "factor") && is(yvar, "factor")){
-    #  return(makeplot_mosaic(x=x, y=y, fill=fill, size=size));
-    #} else if
     if(is.quant(xvar)){
       if(is.quant(yvar)){
         myplot <- myplot + geom_point();
@@ -96,12 +81,6 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
         myplot <- myplot + geom_point(position=position_jitter(width = 0.15, height=0));
       } else {
         myplot <- myplot + geom_point(position=position_jitter(width = 0.15, height=0.15));
-        #if(!missing(fill)){
-        #  myplot <- myplot + geom_point(size=12);
-        #} else {
-        #  myplot <- myplot + geom_point(size=12, color="white");
-        #}
-        #myplot <- myplot + geom_text(stat="bin2d", aes(label=..count..));
       }
     }
     #make a little bigger by default
