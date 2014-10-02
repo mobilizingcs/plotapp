@@ -66,7 +66,8 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
   if(missing(y)){
     myplot <- myplot + geom_bar(colour=NA);
   } else if(y == "dotplot"){
-    myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = "histodot") + ylab("") + theme(axis.text.y=element_blank());    
+    dotmethod <- if(is.numeric(xvar)) {"histodot"} else {"dotdensity"};
+    myplot <- myplot + geom_dotplot(stackgroups = TRUE,  method = dotmethod) + ylab("") + theme(axis.text.y=element_blank());    
   } else {
     #two dimensional plots
     yvar <- eval(as.name(y), data);
