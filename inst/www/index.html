@@ -7,14 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <!-- ocpu library -->
-<script src="js/jquery-1.10.2.min.js"> </script>
+<script src="js/jquery-1.11.1.min.js"> </script>
 <script src="js/bootstrap.min.js"> </script>
 <script src="js/bootstrap-datepicker.js"> </script>
 <script src="js/opencpu-0.4.js"> </script>
 <script src="js/underscore-min.js"> </script>
 <script src="js/jquery.cookie.js"> </script>
 <script src="js/ohmage.js"> </script>
-<script src="js/jquery-ui-1.10.3.custom.js"> </script> 
+<script src="js/jquery-ui-1.10.3.custom.js"> </script>
 <script src="js/app.js"> </script>
 
 <!-- some optional styling stuff -->
@@ -27,7 +27,7 @@
 
 <body>
   <div class="container">
-  
+
     <br>
 
     <div class="row">
@@ -35,12 +35,12 @@
 
         <form id="paramform" role="form">
           <fieldset>
-          
+
             <div id="campaigngroup" class="form-group">
               <label class="control-label" for="campaignfield">Campaign</label>
-              <select id="campaignfield" class="form-control"></select> 
+              <select id="campaignfield" class="form-control"></select>
             </div>
-       
+
             <div class="form-group">
               <label class="control-label">Start Date</label>
               <div class="input-append date input-group">
@@ -48,70 +48,75 @@
                 <span class="add-on input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
               </div>
             </div>
-            
+
             <div class="form-group">
               <label class="control-label">End Date</label>
               <div class="input-append date input-group">
                 <input type="text" id="tofield" class="form-control" placeholder="Date: to">
                 <span class="add-on input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-              </div>            
+              </div>
             </div>
-  
+
             <div id="surveygroup" class="form-group">
               <label class="control-label" for="surveyfield">Survey</label>
-              <select id="surveyfield" class="form-control"></select> 
-            </div>           
-            
+              <select id="surveyfield" class="form-control"></select>
+            </div>
+
             <div id="xfieldgroup" class="form-group">
               <label class="control-label" for="xfield">X axis</label>
-              <select id="xfield" class="form-control"></select> 
-            </div>   
-            
+              <select id="xfield" class="form-control"></select>
+            </div>
+
             <div id="yfieldgroup" class="form-group">
               <label class="control-label" for="yfield">Y axis</label>
-              <select id="yfield" class="form-control"></select> 
+              <select id="yfield" class="form-control"></select>
             </div>
-            
+
             <div id="yfieldgroup" class="form-group">
               <label class="control-label" for="yfield">Color (optional)</label>
-              <select id="colorfield" class="form-control"></select> 
-            </div>   
-            
+              <select id="colorfield" class="form-control"></select>
+            </div>
+
             <div id="sizefieldgroup" class="form-group">
               <label class="control-label" for="sizefield">Size (optional)</label>
-              <select id="sizefield" class="form-control" disabled="disabled"></select> 
-            </div>        
-            
+              <select id="sizefield" class="form-control" disabled="disabled"></select>
+            </div>
+
             <div id="facetfieldgroup" class="form-group">
               <label class="control-label" for="facetfield">Facet (optional)</label>
-              <select id="facetfield" class="form-control"></select> 
-            </div>    
-            
+              <select id="facetfield" class="form-control"></select>
+            </div>
+
             <div id="fittypefieldgroup" class="form-group">
               <label class="control-label" for="fittypefield">Fit Line</label>
               <select id="fittypefield" class="form-control" disabled="disabled">
-                <option value="">—</option> 
-                <option value="linear">linear</option> 
+                <option value="">—</option>
+                <option value="linear">linear</option>
                 <option value="quadratic">quadratic</option>
                 <option value="cubic">cubic</option>
-                <option value="exponential">exponential</option> 
+                <option value="exponential">exponential</option>
                 <option value="log">log</option>
                 <!--<option value="loess">loess</option>-->
-              </select> 
-            </div>  
+              </select>
+              <div class="checkbox">
+                <label>
+                  <input id="fitequation" type="checkbox" disabled="disabled"> Include equation
+                </label>
+              </div>
+            </div>
 
             <div id="subsetfieldgroup" class="form-group">
               <label class="control-label" for="subsetfield">Subset/Filter (optional)</label>
-              <input type="text" id="subsetfield" class="form-control" placeholder="example: myPrompt < 30"> 
-            </div>               
-            
+              <input type="text" id="subsetfield" class="form-control" placeholder="example: myPrompt < 30">
+            </div>
+
           </fieldset>
         </form>
-        
+
         <br>
         <button class="btn btn-primary" id="plotbutton"><i class="icon-ok icon-white"></i> Update Plot</button>
       </div>
-      
+
       <div class="col-md-8 col-lg-9">
         <div class="page-header">
           <h1>PlotApp</h1>
@@ -128,12 +133,12 @@
           <pre></pre>
         </div>
 
-      </div>  
+      </div>
     </div>
-    
+
     <div class="row">
-    </div>   
-    
+    </div>
+
   </div>
 </body>
 </html>
