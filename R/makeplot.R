@@ -130,7 +130,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
     }
     
     #formulas dont coerse dates
-    if(is(data[[x]], "Date")){
+    if(is(data[[x]], c("Date", "POSIXt"))){
       data[[x]] <- as.numeric(data[[x]]);
       data[[x]] <- data[[x]] - min(data[[x]]) + 1;
     }
