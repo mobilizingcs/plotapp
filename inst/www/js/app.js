@@ -56,7 +56,7 @@ $(function() {
     var mydata = campaigndata[campaign_urn];
     var surveyid = $("#surveyfield").val();
     $("#sizefield").attr("disabled", "disabled");
-    $("#fittypefield").val("").attr("disabled", "disabled");
+    $(".fitclass").val("").attr("disabled", "disabled");
     $("#fitequation").prop("checked", false).attr("disabled", "disabled");
 
     $("#xfield").empty()
@@ -101,11 +101,11 @@ $(function() {
       $("#sizefield").removeAttr("disabled");
     } else {
       $("#sizefield").val("").attr("disabled", "disabled");
-    }    
+    }
     if($("#yfield option:selected").attr("data-promptType") == "number" && $("#xfield option:selected").attr("data-promptType") ==  "number"){
-      $("#fittypefield").removeAttr("disabled");
+      $(".fitclass").removeAttr("disabled");
     } else {
-      $("#fittypefield").val("").attr("disabled", "disabled");
+      $(".fitclass").val("").attr("disabled", "disabled");
       $("#fitequation").prop("checked", false).attr("disabled", "disabled");
     }
   }
