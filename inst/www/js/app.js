@@ -133,6 +133,10 @@ $(function() {
     if($("#sizefield").val()) args.size = $("#sizefield").val();
     if($("#facetfield").val()) args.facet = $("#facetfield").val();
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
+    if($("#interceptfield").val()){
+      args.intercept = parseFloat($("#interceptfield").val()) || 0;
+      args.slope = parseFloat($("#slopefield").val()) || 0;
+    }
     if($("#fittypefield").val()) {
       args.fittype = $("#fittypefield").val();
       args.fitequation = $("#fitequation").prop("checked");
@@ -228,6 +232,10 @@ $(function() {
   $("#tofield").val(today.getFullYear() + "-" + zeroFill(today.getMonth()+1, 2) + "-" + zeroFill(today.getDate(),2));
   $("#plotdiv").resizable();
   $("#surveyfield").change(populatevars);
+  
+  $("input.fitclass").keyup(function(){
+    $(this).val($(this).val().match(/[0-9]+[.]?[0-9]*/));
+  });
 
 });
 
