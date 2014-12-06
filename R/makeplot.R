@@ -52,11 +52,11 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
   myplot <- ggplot(data, structure(aeslist, class="uneval"))
 
   #extract x from data
-  xvar <- eval(parse(text=x)[[1]], data);  
-  
+  xvar <- eval(parse(text=x)[[1]], data);
+
   #make a plot
   if(missing(y)){
-    myplot <- myplot + geom_bar(colour=NA);
+    myplot <- myplot + geom_bar(colour=NA, binwidth = diff(range(xvar))/15);
   } else if(y == "dotplot"){
     if(is.quant(xvar)){
       myplot <- myplot + geom_dotplot(stackgroups = TRUE, method = "histodot", binwidth = calculate_smart_binwidth(xvar));
@@ -98,7 +98,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
   if(!missing(facet)){
     myplot <- myplot + facet_grid(as.formula(paste(facet,"~.")))
   }
-  
+
   #add line
   if(!missing(intercept)){
     myplot <- myplot + geom_abline(intercept = intercept, slope = slope, color = "red", linetype="dashed");
@@ -117,23 +117,23 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
   #print some statistics
   options(width=100);
   summarytext <- capture.output(summary(summarydata));
-  
+
   #coefficients
   if(!missing(fittype) && length(fittype) && fitequation){
-    myformula <- switch(fittype, 
+    myformula <- switch(fittype,
       linear = paste0(y, "~", x),
       quadratic = paste0(y, "~", x, " + I(", x, "^2)"),
       cubic = paste0(y, "~", x, " + I(", x, "^2) + I(", x, "^3)"),
       exponential = paste0(y, "~", x),
       log = paste(y, "~log(", x, ")")
     )
-    
+
     family <- if(fittype == "exponential") {
       gaussian("log")
     } else{
       gaussian("identity")
     }
-    
+
     #formulas dont coerse dates
     if(is(data[[x]], c("Date", "POSIXt"))){
       data[[x]] <- as.numeric(data[[x]]);
@@ -142,7 +142,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
     mymodel <- eval(call("glm", as.formula(myformula), quote(data), family=family))
     summarytext <- c(summarytext, "", capture.output(print(coef(mymodel))))
   }
-  
+
   writeLines(summarytext, "summary.txt")
 
   #return summarydata
