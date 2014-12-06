@@ -56,7 +56,11 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
 
   #make a plot
   if(missing(y)){
-    myplot <- myplot + geom_bar(colour=NA, binwidth = diff(range(xvar))/15);
+    if(is.numeric(xvar)){
+      myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(xvar))/15);
+    } else {
+      myplot <- myplot + geom_bar(colour=NA);
+    }
   } else if(y == "dotplot"){
     if(is.quant(xvar)){
       myplot <- myplot + geom_dotplot(stackgroups = TRUE, method = "histodot", binwidth = calculate_smart_binwidth(xvar));
