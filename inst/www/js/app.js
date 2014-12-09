@@ -232,9 +232,9 @@ $(function() {
   $("#tofield").val(today.getFullYear() + "-" + zeroFill(today.getMonth()+1, 2) + "-" + zeroFill(today.getDate(),2));
   $("#plotdiv").resizable();
   $("#surveyfield").change(populatevars);
-  
+
   $("input.fitclass").keyup(function(){
-    $(this).val($(this).val().match(/[0-9]+[.]?[0-9]*/));
+    $(this).val($(this).val().match(/-?[0-9]+[.]?[0-9]*/));
   });
 
 });
