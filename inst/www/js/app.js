@@ -133,7 +133,7 @@ $(function() {
     if($("#sizefield").val()) args.size = $("#sizefield").val();
     if($("#facetfield").val()) args.facet = $("#facetfield").val();
     if($("#subsetfield").val()) args.subset = $("#subsetfield").val();
-    if($("#interceptfield").val()){
+    if($("#interceptfield").val() || $("#slopefield").val()){
       args.intercept = parseFloat($("#interceptfield").val()) || 0;
       args.slope = parseFloat($("#slopefield").val()) || 0;
     }

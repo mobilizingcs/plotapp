@@ -25,7 +25,7 @@
 #' makeplot(CO2, x='Treatment', y='Type')
 #' makeplot(CO2, x='Treatment', y='Plant', facet='Type', fill='Plant')
 #' @export
-makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, slope = 0, fitequation = FALSE){
+makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept = 0, slope = 0, fitequation = FALSE){
 
   #subset filtering
   if(!missing(subset)){
@@ -104,7 +104,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept, 
   }
 
   #add line
-  if(!missing(intercept)){
+  if(!missing(intercept) || !missing(slope)){
     myplot <- myplot + geom_abline(intercept = intercept, slope = slope, color = "red", linetype="dashed");
   }
 
