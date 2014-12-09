@@ -234,7 +234,7 @@ $(function() {
   $("#surveyfield").change(populatevars);
 
   $("input.fitclass").keyup(function(){
-    $(this).val($(this).val().match(/-?[0-9]+[.]?[0-9]*/));
+    $(this).val($(this).val().match(/-?[0-9]*[.]?[0-9]*/));
   });
 
 });
