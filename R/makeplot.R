@@ -25,7 +25,7 @@
 #' makeplot(CO2, x='Treatment', y='Type')
 #' makeplot(CO2, x='Treatment', y='Plant', facet='Type', fill='Plant')
 #' @export
-makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation = FALSE){
+makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept = 0, slope = 0, fitequation = FALSE){
 
   #subset filtering
   if(!missing(subset)){
@@ -52,11 +52,15 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
   myplot <- ggplot(data, structure(aeslist, class="uneval"))
 
   #extract x from data
-  xvar <- eval(parse(text=x)[[1]], data);  
-  
+  xvar <- eval(parse(text=x)[[1]], data);
+
   #make a plot
   if(missing(y)){
-    myplot <- myplot + geom_bar(colour=NA);
+    if(is.numeric(xvar)){
+      myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(xvar))/15);
+    } else {
+      myplot <- myplot + geom_bar(colour=NA);
+    }
   } else if(y == "dotplot"){
     if(is.quant(xvar)){
       myplot <- myplot + geom_dotplot(stackgroups = TRUE, method = "histodot", binwidth = calculate_smart_binwidth(xvar));
@@ -99,6 +103,11 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
     myplot <- myplot + facet_grid(as.formula(paste(facet,"~.")))
   }
 
+  #add line
+  if(!missing(intercept) || !missing(slope)){
+    myplot <- myplot + geom_abline(intercept = intercept, slope = slope, color = "red", linetype="dashed");
+  }
+
   #print the plot
   print(myplot)
 
@@ -112,32 +121,32 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, fitequation
   #print some statistics
   options(width=100);
   summarytext <- capture.output(summary(summarydata));
-  
+
   #coefficients
   if(!missing(fittype) && length(fittype) && fitequation){
-    myformula <- switch(fittype, 
+    myformula <- switch(fittype,
       linear = paste0(y, "~", x),
       quadratic = paste0(y, "~", x, " + I(", x, "^2)"),
       cubic = paste0(y, "~", x, " + I(", x, "^2) + I(", x, "^3)"),
       exponential = paste0(y, "~", x),
       log = paste(y, "~log(", x, ")")
     )
-    
+
     family <- if(fittype == "exponential") {
       gaussian("log")
     } else{
       gaussian("identity")
     }
-    
+
     #formulas dont coerse dates
-    if(is(data[[x]], "Date")){
+    if(is(data[[x]], c("Date", "POSIXt"))){
       data[[x]] <- as.numeric(data[[x]]);
       data[[x]] <- data[[x]] - min(data[[x]]) + 1;
     }
     mymodel <- eval(call("glm", as.formula(myformula), quote(data), family=family))
     summarytext <- c(summarytext, "", capture.output(print(coef(mymodel))))
   }
-  
+
   writeLines(summarytext, "summary.txt")
 
   #return summarydata

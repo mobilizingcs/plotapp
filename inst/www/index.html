@@ -87,9 +87,21 @@
               <select id="facetfield" class="form-control"></select>
             </div>
 
+            <div id="drawlinegroup" class="form-group">
+              <label class="control-label" for="drawline">Draw Line (optional)</label>
+              <div class="row">
+                <div class="col-xs-6">
+                  <input type="text" id="interceptfield" class="fitclass form-control" placeholder="Intercept" disabled="disabled">
+                </div>
+                <div class="col-xs-6">
+                  <input type="text" id="slopefield" class="fitclass form-control" placeholder="Slope" disabled="disabled">
+                </div>
+              </div>
+            </div>
+
             <div id="fittypefieldgroup" class="form-group">
               <label class="control-label" for="fittypefield">Fit Line</label>
-              <select id="fittypefield" class="form-control" disabled="disabled">
+              <select id="fittypefield" class="fitclass form-control" disabled="disabled">
                 <option value="">—</option>
                 <option value="linear">linear</option>
                 <option value="quadratic">quadratic</option>
