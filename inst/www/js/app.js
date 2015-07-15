@@ -208,6 +208,7 @@ $(function() {
       //preselected campaign
       if(campaign_urn){
         loadcampaign();
+        $("#plotappsubtitle").text(campaign_urn);
         $("#campaigngroup").hide();
         return;
       }
