@@ -1,10 +1,10 @@
 $(function() {
 
   //some globals
-  var campaign_urn;
   var campaigndata = {};
   var today = new Date();
-  var serverurl = location.protocol + "//" + location.host + "/app"
+  var serverurl = location.protocol + "//" + location.host + "/app";
+  var campaign_urn = window.location.hash.replace(/^#/, "");
 
   function loadcampaign(){
     $("#surveyfield").empty();
@@ -20,7 +20,7 @@ $(function() {
       oh.campaign.read(campaign_urn, "xml", function(res){
         var xml = $(jQuery.parseXML(res));
         $.each($("survey", xml), function(i, survey){
-          var promptdata = {}
+          var promptdata = {};
           var prompts = $(">contentList>prompt", survey);
           $.each(prompts, function(i, prompt){
             var promptid = $(">id",prompt).text();
@@ -161,7 +161,7 @@ $(function() {
     }
 
     $("#alertdiv").empty();
-    $("#summarydiv pre").empty()
+    $("#summarydiv pre").empty();
 
     $("#plotbutton").attr("disabled", "disabled");
     var req1 = getdata(function(session){
@@ -172,7 +172,7 @@ $(function() {
       errorbox("<strong>Failed to download data from Ohmage</strong> " + req1.responseText.split("In call:")[0]);
       $("#plotbutton").removeAttr("disabled");
     }).done(function(){
-      $("#plotbutton").removeAttr("disabled")
+      $("#plotbutton").removeAttr("disabled");
     });
   });
 
@@ -181,8 +181,8 @@ $(function() {
     if(campaign_urn){
       $("#campaigngroup").removeClass("has-error");
     }
-    loadcampaign()
-  })
+    loadcampaign();
+  });
 
   $("#fittypefield").change(function(){
     if($("#fittypefield option:selected").val()){
@@ -190,7 +190,7 @@ $(function() {
     } else {
       $("#fitequation").prop("checked", false).attr("disabled", "disabled");
     }
-  })
+  });
 
   $("#xfield").on("change", disableinputs);
   $("#yfield").on("change", disableinputs);
@@ -204,6 +204,13 @@ $(function() {
       if(!location.pathname.match("/library/plotbuilder")){
         ocpu.seturl("/ocpu/library/plotbuilder/R");
       }
+      
+      //preselected campaign
+      if(campaign_urn){
+        loadcampaign();
+        $("#campaigngroup").hide();
+        return;
+      }
 
       //populate campaign dropdown
 			oh.user.info(function(data){
@@ -212,15 +219,15 @@ $(function() {
           var nameA = a.title.toLowerCase();
           var nameB = b.title.toLowerCase();
           if (nameA < nameB) //sort string ascending
-            return -1
+            return -1;
           if (nameA > nameB)
-            return 1
-          return 0
+            return 1;
+          return 0;
         });
         $.each(campaigndata, function(i, value){
           $("#campaignfield").append($("<option>").text(value.title).attr("value", value.urn));
         });
-        $("#campaignfield").val("");
+        $("#campaignfield").val(campaign_urn);
 			});
 
       //prevent timeouts while using the application
