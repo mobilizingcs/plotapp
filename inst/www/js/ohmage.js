@@ -190,7 +190,7 @@ oh.logout = function(cb){
 
 oh.sendtologin = function(){
   //steven moved everything to /navbar/
-	window.location = "/navbar/web/#login"
+	window.location = "/#login"
 }
 
 oh.campaign_read = function(cb){
