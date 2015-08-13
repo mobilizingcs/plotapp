@@ -16,7 +16,7 @@ $(function() {
     if(campaigndata[campaign_urn]){
       populatesurvey(campaigndata[campaign_urn]);
     } else if(campaign_urn.match("^[a-z]+demo$")) {
-      $.get("../demodata/" + campaign_urn + ".xml", {}, loadxml, "text");
+      $.get("/ocpu/library/plotbuilder/demodata/" + campaign_urn + ".xml", {}, loadxml, "text");
     } else {
       oh.campaign.read(campaign_urn, "xml", loadxml);
     }
