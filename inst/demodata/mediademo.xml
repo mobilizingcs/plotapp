@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<campaign>
+  <iconUrl>http://web.ohmage.org/mobilize/img/ad_icon.png</iconUrl>
+  
+    <surveys>
+        <survey>
+            <id>AdvertisingMedia</id>
+            <title>Advertising Media</title>
+            <description>Observe and collect forms of advertising media in the community.</description>
+            <submitText>Advertising Media</submitText>
+            <anytime>true</anytime>
+            <contentList>
+                <prompt>
+                    <id>AdPhoto</id>
+                    <displayLabel>Advertisement Photo</displayLabel>
+                    <promptText>Take a picture of the ad</promptText>
+                    <promptType>photo</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>maxDimension</key>
+                            <label>720</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>AdvertisementType</id>
+                    <displayLabel>Advertisement Type</displayLabel>
+                    <promptText>Advertisement type?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Billboard</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>Digital Display</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>Poster</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>Bus</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>Product</id>
+                    <displayLabel>Product</displayLabel>
+                    <promptText>Product?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>ProductType</id>
+                    <displayLabel>Product Type</displayLabel>
+                    <promptText>Product type?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Food and drink</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>Entertainment</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>Electronics and apps</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>Clothing, shoes and accessories</label>
+                        </property>
+                        <property>
+                            <key>4</key>
+                            <label>Home</label>
+                        </property>
+                        <property>
+                            <key>5</key>
+                            <label>Beauty</label>
+                        </property>
+                        <property>
+                            <key>6</key>
+                            <label>Health and medical</label>
+                        </property>
+                        <property>
+                            <key>7</key>
+                            <label>Transportation</label>
+                        </property>
+                        <property>
+                            <key>8</key>
+                            <label>Community/legal services</label>
+                        </property>
+                        <property>
+                            <key>9</key>
+                            <label>Vice</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>TargetAudience</id>
+                    <displayLabel>Target Audience</displayLabel>
+                    <promptText>Target Audience?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>DesiredLevel</id>
+                    <displayLabel>Desired Level</displayLabel>
+                    <promptText>How much do you want to have this? (1 least desirable, 5 most desirable)</promptText>
+                    <promptType>number</promptType>
+                    <default>3</default>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>5</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>Feeling</id>
+                    <displayLabel>Feeling</displayLabel>
+                    <promptText>This ad makes me feel...</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+            </contentList>
+        </survey>
+    </surveys>
+</campaign>

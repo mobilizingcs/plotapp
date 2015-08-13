@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<campaign>
+
+    <surveys>
+        <survey>
+            <id>Snack</id>
+            <title>Snack</title>
+            <description>observe and sample snack events.</description>
+            <submitText>Snack</submitText>
+            <anytime>true</anytime>
+            <contentList>
+                <prompt>
+                    <id>SnackPeriod</id>
+                    <displayLabel>Last snack time period</displayLabel>
+                    <promptText>When did you eat your last snack?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Mid-morning</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>Mid-afternoon</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>Evening</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>Late night</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>WhatSnack</id>
+                    <displayLabel>What did you eat?</displayLabel>
+                    <promptText>What did you eat?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>HealthyLevel</id>
+                    <displayLabel>Healthy level</displayLabel>
+                    <promptText>How healthy was the snack? (1 very unhealthy, 5 very healthy)</promptText>
+                    <promptType>number</promptType>
+                    <default>3</default>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>5</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>SnackLocation</id>
+                    <displayLabel>Snack Location</displayLabel>
+                    <promptText>Where did you eat?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Home</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>School</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>Work</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>Restaurant</label>
+                        </property>
+                        <property>
+                            <key>4</key>
+                            <label>Friends' houses</label>
+                        </property>
+                        <property>
+                            <key>5</key>
+                            <label>Vehicle</label>
+                        </property>
+                        <property>
+                            <key>6</key>
+                            <label>Party</label>
+                        </property>
+                        <property>
+                            <key>7</key>
+                            <label>Other</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>WhoYouSnackWith</id>
+                    <displayLabel>People you had snacks with</displayLabel>
+                    <promptText>Who were you with?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Alone</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>Family</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>Friends</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>Classmates</label>
+                        </property>
+                        <property>
+                            <key>4</key>
+                            <label>Co-workers</label>
+                        </property>
+                        <property>
+                            <key>5</key>
+                            <label>Other</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>WhySnack</id>
+                    <displayLabel>Reasons for snacking</displayLabel>
+                    <promptText>Why did you eat?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>SnackCost</id>
+                    <displayLabel>Cost of snack</displayLabel>
+                    <promptText>Approximate snack cost</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Less than $1.00</label>
+                            <value>0.5</value>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>$1.00-$3.00</label>
+                            <value>2.0</value>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>$3.00-$5.00</label>
+                            <value>4.0</value>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>$5.00-$7.00</label>
+                            <value>6.0</value>
+                        </property>
+                        <property>
+                            <key>4</key>
+                            <label>$7.00-$10.00</label>
+                            <value>8.5</value>
+                        </property>
+                        <property>
+                            <key>5</key>
+                            <label>More than $10.00</label>
+                            <value>10</value>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>SnackImage</id>
+                    <displayLabel>Snack Image</displayLabel>
+                    <promptText>Take a picture?</promptText>
+                    <promptType>photo</promptType>
+                    <skippable>true</skippable>
+                    <skipLabel>Skip</skipLabel>
+                    <properties>
+                        <property>
+                            <key>maxDimension</key>
+                            <label>720</label>
+                        </property>
+                    </properties>
+                </prompt>
+            </contentList>
+        </survey>
+    </surveys>
+</campaign>

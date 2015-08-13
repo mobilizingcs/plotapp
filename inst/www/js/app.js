@@ -15,34 +15,38 @@ $(function() {
     }
     if(campaigndata[campaign_urn]){
       populatesurvey(campaigndata[campaign_urn]);
+    } else if(campaign_urn.match("^[a-z]+demo$")) {
+      $.get("../demodata/" + campaign_urn + ".xml", {}, loadxml, "text");
     } else {
-      var mydata = {};
-      oh.campaign.read(campaign_urn, "xml", function(res){
-        var xml = $(jQuery.parseXML(res));
-        $.each($("survey", xml), function(i, survey){
-          var promptdata = {};
-          var prompts = $(">contentList>prompt", survey);
-          $.each(prompts, function(i, prompt){
-            var promptid = $(">id",prompt).text();
-            promptdata[promptid] = {
-              id : promptid,
-              promptType : $(">promptType", prompt).text(),
-              promptlabel : $(">displayLabel", prompt).text()
-            };
-          });
-          var surveyid = $(">id", survey).text();
-          mydata[surveyid] = {
-            id : surveyid,
-            title : $(">title", survey).text(),
-            prompts : promptdata
-          };
-        });
-
-        //recursive in case user changed selection in the mean time
-        campaigndata[campaign_urn] = mydata;
-        loadcampaign();
-      });
+      oh.campaign.read(campaign_urn, "xml", loadxml);
     }
+  }
+  
+  function loadxml(txt){
+    var mydata = {};
+    var xml = $(jQuery.parseXML(txt));
+    $.each($("survey", xml), function(i, survey){
+      var promptdata = {};
+      var prompts = $(">contentList>prompt", survey);
+      $.each(prompts, function(i, prompt){
+        var promptid = $(">id",prompt).text();
+        promptdata[promptid] = {
+          id : promptid,
+          promptType : $(">promptType", prompt).text(),
+          promptlabel : $(">displayLabel", prompt).text()
+        };
+      });
+      var surveyid = $(">id", survey).text();
+      mydata[surveyid] = {
+        id : surveyid,
+        title : $(">title", survey).text(),
+        prompts : promptdata
+      };
+    });
+
+    //recursive in case user changed selection in the mean time
+    campaigndata[campaign_urn] = mydata;
+    loadcampaign();
   }
 
   function populatesurvey(mydata){
@@ -196,45 +200,50 @@ $(function() {
   $("#yfield").on("change", disableinputs);
 
   //init page
-	oh.ping(function(){
-		oh.user.whoami(function(x){
-      $("#username").text(x);
-
-      //this is where we set the opencpu server in case it is hosted elsewhere
-      if(!location.pathname.match("/library/plotbuilder")){
-        ocpu.seturl("/ocpu/library/plotbuilder/R");
-      }
-      
-      //preselected campaign
-      if(campaign_urn){
-        loadcampaign();
-        $("#plotappsubtitle").text(campaign_urn);
-        $("#campaigngroup").hide();
-        return;
-      }
-
-      //populate campaign dropdown
-			oh.user.info(function(data){
-        var campaigndata = $.map(data[x].campaigns, function(title, urn) {return [{urn:urn, title:title}]});
-        campaigndata.sort(function(a,b){
-          var nameA = a.title.toLowerCase();
-          var nameB = b.title.toLowerCase();
-          if (nameA < nameB) //sort string ascending
-            return -1;
-          if (nameA > nameB)
-            return 1;
-          return 0;
-        });
-        $.each(campaigndata, function(i, value){
-          $("#campaignfield").append($("<option>").text(value.title).attr("value", value.urn));
-        });
-        $("#campaignfield").val(campaign_urn);
-			});
-
-      //prevent timeouts while using the application
-      oh.keepalive();
-		});
-	});
+  if(campaign_urn == "demo"){
+    campaign_urn = $("#campaignfield option:selected").val();
+    loadcampaign();
+  } else {
+  	oh.ping(function(){
+  		oh.user.whoami(function(x){
+        $("#username").text(x);
+  
+        //this is where we set the opencpu server in case it is hosted elsewhere
+        if(!location.pathname.match("/library/plotbuilder")){
+          ocpu.seturl("/ocpu/library/plotbuilder/R");
+        }
+        
+        //preselected campaign
+        if(campaign_urn){
+          loadcampaign();
+          $("#plotappsubtitle").text(campaign_urn);
+          $("#campaigngroup").hide();
+          return;
+        }
+  
+        //populate campaign dropdown
+  			oh.user.info(function(data){
+          var campaigndata = $.map(data[x].campaigns, function(title, urn) {return [{urn:urn, title:title}]});
+          campaigndata.sort(function(a,b){
+            var nameA = a.title.toLowerCase();
+            var nameB = b.title.toLowerCase();
+            if (nameA < nameB) //sort string ascending
+              return -1;
+            if (nameA > nameB)
+              return 1;
+            return 0;
+          });
+          $.each(campaigndata, function(i, value){
+            $("#campaignfield").append($("<option>").text(value.title).attr("value", value.urn));
+          });
+          $("#campaignfield").val(campaign_urn);
+  			});
+  
+        //prevent timeouts while using the application
+        oh.keepalive();
+  		});
+  	});
+  }
 
   $("#paramform .input-append.date").datepicker({format: "yyyy-mm-dd"});
   $("#tofield").val(today.getFullYear() + "-" + zeroFill(today.getMonth()+1, 2) + "-" + zeroFill(today.getDate(),2));
