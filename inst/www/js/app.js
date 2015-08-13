@@ -199,6 +199,11 @@ $(function() {
   $("#xfield").on("change", disableinputs);
   $("#yfield").on("change", disableinputs);
 
+  //this is where we set the opencpu server in case it is hosted elsewhere
+  if(!location.pathname.match("/library/plotbuilder")){
+    ocpu.seturl("/ocpu/library/plotbuilder/R");
+  }
+
   //init page
   if(campaign_urn == "demo"){
     campaign_urn = $("#campaignfield option:selected").val();
@@ -208,11 +213,6 @@ $(function() {
   		oh.user.whoami(function(x){
         $("#username").text(x);
   
-        //this is where we set the opencpu server in case it is hosted elsewhere
-        if(!location.pathname.match("/library/plotbuilder")){
-          ocpu.seturl("/ocpu/library/plotbuilder/R");
-        }
-        
         //preselected campaign
         if(campaign_urn){
           loadcampaign();
