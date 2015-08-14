@@ -24,12 +24,8 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$datetime <- as.POSIXct(mydata$context.timestamp);
   mydata$time <- strptime(format(mydata$datetime, "%H:%M:%S"), format="%H:%M:%S");
   mydata$day <- factor(format(mydata$datetime, "%a"), ordered=TRUE, levels=c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
-  if(length(mydata$user.id)){
-    mydata$user <- as.factor(mydata$user.id);
-  }
-  if(length(mydata$survey.privacy_state)){
-    mydata$privacy <- as.factor(mydata$survey.privacy_state);
-  }
+  mydata$user <- if(length(mydata$user.id)) as.factor(mydata$user.id) else "demo";
+  mydata$privacy <-if(length(mydata$survey.privacy_state)) as.factor(mydata$survey.privacy_state) else "shared"
   
   #remove redundant columns
   mydata$survey.privacy_state <- NULL;
