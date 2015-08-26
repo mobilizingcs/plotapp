@@ -11,7 +11,7 @@
 getdata <- function(campaign_urn, serverurl, token, ...){
   if(grepl("^urn:public:", campaign_urn)){
     demoname <- paste0(sub("urn:public:", "", campaign_urn), "demo")
-    mydata <- demodata(campaign_urn, ...)
+    mydata <- demodata(demoname, ...)
     names(mydata) <- sub("\\.label$", "", names(mydata));
   } else {
     mydata <- oh.survey_response.read(campaign_urn, serverurl=serverurl,token=token, 
