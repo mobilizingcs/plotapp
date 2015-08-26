@@ -9,7 +9,8 @@
 #' @importFrom Ohmage oh.survey_response.read
 #' @export
 getdata <- function(campaign_urn, serverurl, token, ...){
-  if(grepl("^[a-z]+demo$", campaign_urn)){
+  if(grepl("^urn:public:", campaign_urn)){
+    demoname <- paste0(sub("urn:public:", "", campaign_urn), "demo")
     mydata <- demodata(campaign_urn, ...)
     names(mydata) <- sub("\\.label$", "", names(mydata));
   } else {

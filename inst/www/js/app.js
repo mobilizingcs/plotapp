@@ -15,8 +15,9 @@ $(function() {
     }
     if(campaigndata[campaign_urn]){
       populatesurvey(campaigndata[campaign_urn]);
-    } else if(campaign_urn.match("^[a-z]+demo$")) {
-      $.get("/ocpu/library/plotbuilder/demodata/" + campaign_urn + ".xml", {}, loadxml, "text");
+    } else if(campaign_urn.match("^urn:public")) {
+      var demoname = campaign_urn.substring(11) + "demo";
+      $.get("/ocpu/library/plotbuilder/demodata/" + demoname + ".xml", {}, loadxml, "text");
     } else {
       oh.campaign.read(campaign_urn, "xml", loadxml);
     }
@@ -208,6 +209,10 @@ $(function() {
   if(campaign_urn == "demo"){
     campaign_urn = $("#campaignfield option:selected").val();
     loadcampaign();
+  } else if(campaign_urn.match("^urn:public")){
+    loadcampaign();
+    $("#plotappsubtitle").text(campaign_urn);
+    $("#campaigngroup").hide();    
   } else {
   	oh.ping(function(){
   		oh.user.whoami(function(x){
