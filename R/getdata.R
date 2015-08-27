@@ -42,7 +42,7 @@ demodata <- function(dataset = c("snackdemo", "nutritiondemo", "mediademo", "tra
   subset(mydata, dates > start_date & dates < end_date)
   choicevars <- grep("\\.label$", names(mydata))
   if(length(choicevars)){
-    mydata[choicevars] <- lapply(mydata[choicevars], as.factor)
+    mydata[choicevars] <- lapply(mydata[choicevars, drop = FALSE], as.factor)
   }
   names(mydata) <- sub("\\.label$", "", names(mydata));
   return(mydata)
