@@ -12,7 +12,6 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   if(grepl("^urn:public:", campaign_urn)){
     demoname <- paste0(sub("urn:public:", "", campaign_urn), "demo")
     mydata <- demodata(demoname, ...)
-    names(mydata) <- sub("\\.label$", "", names(mydata));
   } else {
     mydata <- oh.survey_response.read(campaign_urn, serverurl=serverurl,token=token, 
       column_list = "urn:ohmage:user:id,urn:ohmage:prompt:response,urn:ohmage:context:timestamp,urn:ohmage:survey:privacy_state", ...);
@@ -41,4 +40,10 @@ demodata <- function(dataset = c("snackdemo", "nutritiondemo", "mediademo", "tra
   mydata <- read.csv(system.file(paste0("demodata/", dataset, ".csv"), package = "plotbuilder"), stringsAsFactors = FALSE)
   dates <- as.Date(mydata$context.timestamp)
   subset(mydata, dates > start_date & dates < end_date)
+  choicevars <- grep("\\.label$", names(mydata))
+  if(length(choicevars)){
+    mydata[choicevars] <- lapply(mydata[choicevars], as.factor)
+  }
+  names(mydata) <- sub("\\.label$", "", names(mydata));
+  return(mydata)
 }
