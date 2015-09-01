@@ -10,10 +10,12 @@
 #' @export
 getdata <- function(campaign_urn, serverurl, token, ...){
   if(grepl("^urn:public:", campaign_urn)){
-    demoname <- paste0(sub("urn:public:", "", campaign_urn), "demo")
-    mydata <- demodata(demoname, ...)
+    demoname <- paste0(sub("urn:public:", "", campaign_urn))
+    demoname <- match.arg(demoname, c("snack", "nutrition", "media", "trash"))
+    href <- paste0(serverurl, "/../navbar/demo/data/", demoname, "/", demoname, "demo.csv")
+    mydata <- demodata(href, ...)
   } else {
-    mydata <- oh.survey_response.read(campaign_urn, serverurl=serverurl,token=token, 
+    mydata <- oh.survey_response.read(campaign_urn, serverurl = serverurl, token = token, 
       column_list = "urn:ohmage:user:id,urn:ohmage:prompt:response,urn:ohmage:context:timestamp,urn:ohmage:survey:privacy_state", ...);
     if(nrow(mydata) == 0){
       stop("No survey responses found for this campaign/range.")
@@ -35,9 +37,8 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   invisible(mydata);
 }
 
-demodata <- function(dataset = c("snackdemo", "nutritiondemo", "mediademo", "trashdemo"), start_date = "2000-01-01", end_date = "2050-01-01", ...){
-  dataset <- match.arg(dataset)
-  mydata <- read.csv(system.file(paste0("demodata/", dataset, ".csv"), package = "plotbuilder"), stringsAsFactors = FALSE)
+demodata <- function(href, start_date = "2000-01-01", end_date = "2050-01-01", ...){
+  mydata <- read.csv(curl(href), stringsAsFactors = FALSE)
   dates <- as.Date(mydata$context.timestamp)
   subset(mydata, dates > start_date & dates < end_date)
   choicevars <- grep("\\.label$", names(mydata))

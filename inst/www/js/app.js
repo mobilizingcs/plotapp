@@ -16,8 +16,11 @@ $(function() {
     if(campaigndata[campaign_urn]){
       populatesurvey(campaigndata[campaign_urn]);
     } else if(campaign_urn.match("^urn:public")) {
-      var demoname = campaign_urn.substring(11) + "demo";
-      $.get("/ocpu/library/plotbuilder/demodata/" + demoname + ".xml", {}, loadxml, "text");
+      var demoname = campaign_urn.substring(11);
+      var href = "/navbar/demo/data/" + demoname + "/" + demoname + "demo.xml";
+      $.get(href, {}, loadxml, "text").fail(function() {
+        alert("failed to download campaign from " + href);
+      });
     } else {
       oh.campaign.read(campaign_urn, "xml", loadxml);
     }

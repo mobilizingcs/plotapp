@@ -9,4 +9,5 @@ Description: Build plots with Ohmage data
 License: GPL
 Imports:
     Ohmage,
-    ggplot2
+    ggplot2,
+    curl
