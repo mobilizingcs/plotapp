@@ -57,7 +57,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept =
   #make a plot
   if(missing(y)){
     if(is.numeric(xvar)){
-      myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(xvar))/15);
+      myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(xvar, na.rm = TRUE))/15);
     } else {
       myplot <- myplot + geom_bar(colour=NA);
     }
