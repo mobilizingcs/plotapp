@@ -107,6 +107,14 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept =
   if(!missing(intercept) || !missing(slope)){
     myplot <- myplot + geom_abline(intercept = intercept, slope = slope, color = "red", linetype="dashed");
   }
+  
+  # Fix label for 'time' variable
+  if(identical(x, 'time')){
+    myplot <- myplot + scale_x_datetime(
+      breaks = scales::date_breaks("2 hours"),
+      labels = scales::date_format("%H:%M")
+    )
+  }
 
   #print the plot
   print(myplot)
