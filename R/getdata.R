@@ -22,11 +22,17 @@ getdata <- function(campaign_urn, serverurl, token, ...){
     }
     names(mydata) <- sub("^prompt\\.id\\.", "", names(mydata));
   }
+
+  # Make sure to pass timezone = "" otherwise date has different date than timestamp
+  mydata$datetime <- as.POSIXct(mydata$context.timestamp, "");
+  mydata$date <- as.Date(mydata$datetime, "")
+  mydata$day <- ordered(format(mydata$datetime, "%A"))
+  
+  # ggplot2 requires an explicit timezone here
   local_tz <- format(Sys.time(), "%Z")
-  mydata$date <- as.Date(mydata$context.timestamp);
-  mydata$datetime <- as.POSIXct(mydata$context.timestamp, local_tz);
   mydata$time <- as.POSIXct(strptime(substring(mydata$context.timestamp, 12), format = "%H:%M:%S"), local_tz);
-  mydata$day <- factor(format(mydata$datetime, "%a"), ordered=TRUE, levels=c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+  
+  # these variables are not available for demo data 
   mydata$user <- if(length(mydata$user.id)) as.factor(mydata$user.id) else "demo";
   mydata$privacy <-if(length(mydata$survey.privacy_state)) as.factor(mydata$survey.privacy_state) else "shared"
   
