@@ -56,16 +56,12 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept =
 
   #make a plot
   if(missing(y)){
-    if(is.numeric(xvar)){
-      if(is_whole_numbers(xvar)){
-        myplot <- myplot + geom_bar(colour="white", binwidth = 1, origin = min(xvar) - 0.5);        
-      } else {
-        myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(xvar, na.rm = TRUE))/15);        
-      }
-    } else if(identical(x, "time")){
+    if(inherits(xvar, "Date") || is_whole_numbers(xvar)){
+      myplot <- myplot + geom_bar(colour="white", binwidth = 1, origin = unclass(min(xvar, na.rm = TRUE)) - 0.5)
+    } else if(inherits(xvar, "time_of_day")){
       myplot <- myplot + geom_bar(colour="white", binwidth = 3600);
-    } else if(inherits(xvar, "Date")){
-      myplot <- myplot + geom_bar(colour="white", binwidth = 1);
+    } else if(is.numeric(xvar) || inherits(xvar, "POSIXct")){
+      myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(unclass(xvar), na.rm = TRUE))/15)
     } else {
       myplot <- myplot + geom_bar(colour=NA);
     }
