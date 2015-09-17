@@ -34,10 +34,14 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$survey.privacy_state <- NULL;
   mydata$context.timestamp <- NULL;
   
+  #hack for later
+  class(mydata$time) <- c("time_of_day", class(mydata$time))
+  
   #return ze data
   invisible(mydata);
 }
 
+#' @importFrom curl curl
 demodata <- function(href, start_date = "2000-01-01", end_date = "2050-01-01", ...){
   mydata <- read.csv(curl(href), stringsAsFactors = FALSE)
   dates <- as.Date(mydata$context.timestamp)
