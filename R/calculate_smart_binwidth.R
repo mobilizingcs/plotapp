@@ -13,3 +13,10 @@ calculate_smart_binwidth <- function(x, aspect_ratio = 2/3){
     nbins <- ceiling(nbins * 1.03);
   }
 }
+
+is_whole_numbers <- function(x){
+  x <- stats::na.omit(as.vector(x))
+  whole_numbers <- all.equal(x, as.integer(x))
+  width <- diff(range(x))
+  return(whole_numbers && width < 15)
+}
