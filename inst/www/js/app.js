@@ -226,8 +226,10 @@ $(function() {
         //preselected campaign
         if(campaign_urn){
           loadcampaign();
-          $("#plotappsubtitle").text(campaign_urn);
           $("#campaigngroup").hide();
+          oh.user.info(function(data){
+            $("#plotappsubtitle").text(data[x].campaigns[campaign_urn] || campaign_urn);
+          });
           return;
         }
   
