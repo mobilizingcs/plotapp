@@ -67,17 +67,19 @@ $(function() {
     $(".fitclass").val("").attr("disabled", "disabled");
     $("#fitequation").prop("checked", false).attr("disabled", "disabled");
 
+    /* Note: display the extract variable name in the text label because the
+     * user needs to know the variable name to filter */
     $("#xfield").empty()
-      .append($("<option>").text("date").attr("data-promptType", "number"))
-      .append($("<option>").text("time").attr("data-promptType", "number"))
-      .append($("<option>").text("day"))
-      .append($("<option>").text("datetime").attr("data-promptType", "number"))
-      .append($("<option>").text("user"))
-      .append($("<option>").text("privacy"));
+      .append($("<option>").text("date").val("date").attr("data-promptType", "number"))
+      .append($("<option>").text("time").val("time").attr("data-promptType", "number"))
+      .append($("<option>").text("day").val("day"))
+      .append($("<option>").text("datetime").val("datetime").attr("data-promptType", "number"))
+      .append($("<option>").text("user").val("user"))
+      .append($("<option>").text("privacy").val("privacy"));
 
     $("#yfield").empty()
-      .append($("<option>").val("").text("responses (count)"))
-      .append($("<option>").val("dotplot").text("responses (dotplot)"));
+      .append($("<option>").val("").text("Responses (count)"))
+      .append($("<option>").val("dotplot").text("Responses (dotplot)"));
 
     $("#colorfield").empty()
       .append($("<option>").val("").text("—"))
