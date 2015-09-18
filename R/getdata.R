@@ -26,7 +26,8 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   # Make sure to pass timezone = "" otherwise date has different date than timestamp
   mydata$datetime <- as.POSIXct(mydata$context.timestamp, "");
   mydata$date <- as.Date(mydata$datetime, "")
-  mydata$day <- ordered(format(mydata$datetime, "%A"))
+  mydata$day <- ordered(format(mydata$datetime, "%A"), levels = c("Monday", 
+    "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",  "Sunday"))
   
   # ggplot2 requires an explicit timezone here
   local_tz <- format(Sys.time(), "%Z")
