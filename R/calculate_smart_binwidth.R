@@ -16,10 +16,10 @@ calculate_smart_binwidth <- function(x, aspect_ratio = 2/3){
 
 is_whole_numbers <- function(x){
   if(is.numeric(x)){
-    x <- stats::na.omit(as.vector(x))
+    x <- as.vector(x, mode = "double")
     whole_numbers <- all.equal(x, as.integer(x))
-    width <- diff(range(x))
-    return(whole_numbers && width < 15 && width > 0)    
+    width <- diff(range(x, na.rm = TRUE))
+    return(isTRUE(whole_numbers) && width < 25 && width > 0)    
   } else {
     return(FALSE)
   }
