@@ -34,8 +34,8 @@ getdata <- function(campaign_urn, serverurl, token, ...){
   mydata$time <- as.POSIXct(strptime(substring(mydata$context.timestamp, 12), format = "%H:%M:%S"), local_tz);
   
   # these variables are not available for demo data 
-  mydata$user <- if(length(mydata$user.id)) as.factor(mydata$user.id) else "demo";
-  mydata$privacy <-if(length(mydata$survey.privacy_state)) as.factor(mydata$survey.privacy_state) else "shared"
+  mydata$user <- if(length(mydata$user.id)) as.factor(mydata$user.id) else factor("demo");
+  mydata$privacy <-if(length(mydata$survey.privacy_state)) as.factor(mydata$survey.privacy_state) else factor("shared")
   
   #remove redundant columns
   mydata$survey.privacy_state <- NULL;
