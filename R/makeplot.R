@@ -84,7 +84,7 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept =
       } else {
         myplot <- myplot + geom_point(position=position_jitter(width = 0, height=0.15));
       }
-    } else if(is.factor(xvar)){
+    } else {
       if(is.quant(yvar)){
         myplot <- myplot + geom_point(position=position_jitter(width = 0.15, height=0));
       } else {
