@@ -126,8 +126,8 @@ $(function() {
       serverurl : serverurl,
       token : $.cookie("auth_token"),
       privacy_state : "shared",
-      start_date : $("#fromfield").val(),
-      end_date : $("#tofield").val()
+      start_date : $("#fromfield").val() + " 00:00:00",
+      end_date : $("#tofield").val() + " 23:59:59"
     }, cb);
   }
 
