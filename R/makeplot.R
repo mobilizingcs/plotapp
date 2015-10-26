@@ -63,7 +63,8 @@ makeplot <- function(data, subset, x, y, fill, size, facet, fittype, intercept =
     } else if(is.numeric(xvar) || inherits(xvar, "POSIXct")){
       myplot <- myplot + geom_bar(colour="white", binwidth = diff(range(unclass(xvar), na.rm = TRUE))/15)
     } else {
-      myplot <- myplot + geom_bar(colour=NA);
+      # drop=FALSE keeps the unused categories
+      myplot <- myplot + geom_bar(colour=NA) + scale_x_discrete(drop=FALSE);
     }
   } else if(y == "dotplot"){
     if(is.quant(xvar)){
