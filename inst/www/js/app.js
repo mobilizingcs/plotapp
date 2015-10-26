@@ -70,9 +70,9 @@ $(function() {
     /* Note: display the extract variable name in the text label because the
      * user needs to know the variable name to filter */
     $("#xfield").empty()
-      .append($("<option>").text("date").val("date").attr("data-promptType", "number"))
-      .append($("<option>").text("time").val("time").attr("data-promptType", "number"))
-      .append($("<option>").text("day").val("day"))
+      .append($("<option>").text("date (yyyy-mm-dd)").val("date").attr("data-promptType", "number"))
+      .append($("<option>").text("time (time of day)").val("time").attr("data-promptType", "number"))
+      .append($("<option>").text("day (day of week)").val("day"))
       .append($("<option>").text("datetime").val("datetime").attr("data-promptType", "number"))
       .append($("<option>").text("user").val("user"))
       .append($("<option>").text("privacy").val("privacy"));
