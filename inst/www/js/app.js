@@ -209,7 +209,7 @@ $(function() {
   if(!location.pathname.match("/library/plotbuilder")){
     ocpu.seturl("/ocpu/library/plotbuilder/R");
     if(location.host == "mobilize.lausd.net") {
-      ocpu.seturl("https://mobilize.lausd.net/ocpu/library/plotbuilder/R/");
+      ocpu.seturl("https://mobilize.lausd.net/ocpu/library/plotbuilder/R");
     }
   }
 
