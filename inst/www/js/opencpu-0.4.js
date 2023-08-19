@@ -362,7 +362,7 @@
     if(!newpath.match("/R$")){
       alert("ERROR! Trying to set R url to: " + newpath +". Path to an OpenCPU R package must end with '/R'");
     } else {
-      if(newpath == "https://mobilize.lausd.net/ocpu/library/plotbuilder/R") {
+      if(newpath == "https://mobilize.lausd.net/ocpu/library/plotbuilder/R" || location.host == "mobilize.lausd.net") {
         newpath = "https://mobilize.lausd.net/ocpu/library/plotbuilder/R/";
       }
       r_path = document.createElement('a');
