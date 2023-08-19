@@ -362,6 +362,9 @@
     if(!newpath.match("/R$")){
       alert("ERROR! Trying to set R url to: " + newpath +". Path to an OpenCPU R package must end with '/R'");
     } else {
+      if(newpath == "https://mobilize.lausd.net/ocpu/library/plotbuilder/R") {
+        newpath = "https://mobilize.lausd.net/ocpu/library/plotbuilder/R/";
+      }
       r_path = document.createElement('a');
       r_path.href = newpath;
       r_path.href = r_path.href; //IE needs this
