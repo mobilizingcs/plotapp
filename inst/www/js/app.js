@@ -208,6 +208,9 @@ $(function() {
   //this is where we set the opencpu server in case it is hosted elsewhere
   if(!location.pathname.match("/library/plotbuilder")){
     ocpu.seturl("/ocpu/library/plotbuilder/R");
+    if(location.host == "mobilize.lausd.net") {
+      ocpu.seturl("https://mobilize.lausd.net/ocpu/library/plotbuilder/R/");
+    }
   }
 
   //init page
